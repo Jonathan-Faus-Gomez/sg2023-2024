@@ -32,6 +32,11 @@
       <field name="res_model">game.edificio</field>
       <field name="view_mode">tree,form</field>
     </record>
+    <record model="ir.actions.act_window" id="game.action_recurso">
+      <field name="name">Recurso window</field>
+      <field name="res_model">game.recurso</field>
+      <field name="view_mode">tree,form</field>
+    </record>
 
 
     <!-- server action to the one above -->
@@ -66,5 +71,7 @@
               action="game.action_dino"/>
     <menuitem name="List" id="game.menu_1_edificio" parent="game.menu_1"
               action="game.action_edificio"/>
+    <menuitem name="List" id="game.menu_1_recurso" parent="game.menu_1"
+              action="game.action_recurso"/>
   </data>
 </odoo>
