@@ -1,5 +1,4 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_game_player,game.player,model_game_player,base.group_user,1,1,1,1
 access_game_dino,game.dino,model_game_dino,base.group_user,1,1,1,1
 access_game_edificio,game.edificio,model_game_edificio,base.group_user,1,1,1,1
 access_game_recurso,game.recurso,model_game_recurso,base.group_user,1,1,1,1

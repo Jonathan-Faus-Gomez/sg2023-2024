@@ -65,13 +65,13 @@
 
     <!-- actions -->
 
-    <menuitem name="List" id="game.menu_1_player" parent="game.menu_1"
+    <menuitem name="Player" id="game.menu_1_player" parent="game.menu_1"
               action="game.action_player"/>
-    <menuitem name="List" id="game.menu_1_dino" parent="game.menu_1"
+    <menuitem name="Dino" id="game.menu_1_dino" parent="game.menu_1"
               action="game.action_dino"/>
-    <menuitem name="List" id="game.menu_1_edificio" parent="game.menu_1"
+    <menuitem name="Edificio" id="game.menu_1_edificio" parent="game.menu_1"
               action="game.action_edificio"/>
-    <menuitem name="List" id="game.menu_1_recurso" parent="game.menu_1"
+    <menuitem name="Recurso" id="game.menu_1_recurso" parent="game.menu_1"
               action="game.action_recurso"/>
   </data>
 </odoo>
