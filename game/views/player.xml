@@ -1,0 +1,12 @@
+<record model="ir.ui.view" id="game_player_form_view">
+    <field name="name">game.player.form</field>
+    <field name="model">game.player</field>
+    <field name="arch" type="xml">
+        <form string="Jugador">
+            <group>
+                <field name="name"/>
+                <field name="level"/>
+            </group>
+        </form>
+    </field>
+</record>
