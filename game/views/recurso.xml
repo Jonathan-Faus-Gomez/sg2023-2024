@@ -1,0 +1,33 @@
+<odoo>
+    <data>
+
+        <record model="ir.ui.view" id="game_recurso_tree_view">
+            <field name="name">game.recurso.tree</field>
+            <field name="model">game.recurso</field>
+            <field name="arch" type="xml">
+                <tree string="Recursos">
+                    <field name="player"/>
+                    <field name="tipo"/>
+                    <field name="cantidad"/>
+                </tree>
+            </field>
+        </record>
+
+
+        <record model="ir.ui.view" id="game_recurso_form_view">
+            <field name="name">game.recurso.form</field>
+            <field name="model">game.recurso</field>
+            <field name="arch" type="xml">
+                <form string="Recurso">
+                    <sheet>
+                        <group>
+                            <field name="cantidad"/>
+                            <field name="tipo"/>
+                            <field name="player"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

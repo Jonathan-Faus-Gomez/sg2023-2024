@@ -1,0 +1,39 @@
+<odoo>
+    <data>
+
+        <record model="ir.ui.view" id="game_dino_tree_view">
+            <field name="name">game.dino.tree</field>
+            <field name="model">game.dino</field>
+            <field name="arch" type="xml">
+                <tree string="Dinos">
+                    <field name="name"/>
+                    <field name="level"/>
+                    <field name="tipo"/>
+                    <field name="vida"/>
+                    <field name="ataque"/>
+                    <field name="player"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="game_dino_form_view">
+            <field name="name">game.dino.form</field>
+            <field name="model">game.dino</field>
+            <field name="arch" type="xml">
+                <form string="Dino">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="level"/>
+                            <field name="vida"/>
+                            <field name="ataque"/>
+                            <field name="tipo"/>
+                            <field name="player"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+    </data>
+</odoo>

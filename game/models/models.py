@@ -3,7 +3,8 @@
 from odoo import models, fields, api
 from odoo.exceptions import ValidationError
 
-
+#probar demo
+#valores por defecto general
 class player(models.Model):
     _name = 'game.player'
     _description = 'Jugador'
@@ -21,10 +22,13 @@ class player(models.Model):
                 raise ValidationError("No puedes tener un nivel tan bajo: %s" % record.level)
 
 
+#valores por defecto
+
 class dino(models.Model):
     _name = 'game.dino'
     _description = 'Dinosaurio'
 
+    name = fields.Char()
     level = fields.Integer(default=1)
     tipo = fields.Selection([('1', 'Carnivoro'), ('2', 'Herbivoro'), ('3', 'Omnivoro')])
     player = fields.Many2one('game.player')
@@ -59,10 +63,16 @@ class dino(models.Model):
                 record.ataque = record.ataque * 1.3
 
 
+
+
+#valores por defecto
+#relacion con recursos
+#ataque tener limite y cada dino ocupe espacio
 class edificio(models.Model):
     _name = 'game.edificio'
     _description = 'Edificio'
 
+    name = fields.Char()
     tipo = fields.Selection([('1', 'Almacen'), ('2', 'Defensa'), ('3', 'Ataque'), ('4', 'Produccion')])
     level = fields.Integer(default=1)
     player = fields.Many2one('game.player')
@@ -104,6 +114,7 @@ class recurso(models.Model):
     _name = 'game.recurso'
     _description = 'Recurso'
 
+    name = fields.Char()
     tipo = fields.Selection([('1', 'Carne'), ('2', 'Vegetal'), ('3', 'Oro')])
     cantidad = fields.Integer()
     player = fields.Many2one('game.player')

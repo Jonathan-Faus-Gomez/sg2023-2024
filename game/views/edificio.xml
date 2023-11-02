@@ -1,0 +1,36 @@
+<odoo>
+    <data>
+
+        <record model="ir.ui.view" id="game_edificio_tree_view">
+            <field name="name">game.edificio.tree</field>
+            <field name="model">game.edificio</field>
+            <field name="arch" type="xml">
+                <tree string="Edificios">
+                    <field name="name"/>
+                    <field name="tipo"/>
+                    <field name="level"/>
+                    <field name="player"/>
+                    <field name="vida"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="game_edificio_form_view">
+            <field name="name">game.edificio.form</field>
+            <field name="model">game.edificio</field>
+            <field name="arch" type="xml">
+                <form string="Edificio">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="level"/>
+                            <field name="vida"/>
+                            <field name="tipo"/>
+                            <field name="player"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>
