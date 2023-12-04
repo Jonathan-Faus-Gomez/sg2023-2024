@@ -1,0 +1,43 @@
+<odoo>
+    <data>
+        <!-- CALENDAR-->
+        <record model="ir.ui.view" id="game.batalla_calendar_view">
+            <field name="name">game.batalla.calendar</field>
+            <field name="model">game.batalla</field>
+            <field name="arch" type="xml">
+                <calendar string="Batallas" date_start="start" date_stop="end"/>
+            </field>
+        </record>
+
+
+        <!-- FORM-->
+        <record model="ir.ui.view" id="game.batalla_form_view">
+            <field name="name">game.batalla.form</field>
+            <field name="model">game.batalla</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="start"/>
+                            <field name="end"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- TREE -->
+        <record model="ir.ui.view" id="game.batalla_tree_view">
+            <field name="name">game.batalla.tree</field>
+            <field name="model">game.batalla</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="start"/>
+                    <field name="end"/>
+                </tree>
+            </field>
+        </record>
+
+
+    </data>
+</odoo>

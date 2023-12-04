@@ -26,6 +26,7 @@
     'data': [
         'security/ir.model.access.csv',
         'views/views.xml',
+        'views/batalla.xml',
         'views/templates.xml',
         'views/player.xml',
         'views/dino.xml',
