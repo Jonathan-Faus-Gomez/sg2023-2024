@@ -36,6 +36,23 @@
         </record>
 
 
-        <!-- AQUI CREAR VISTA KANBAN -->
+        <record model="ir.ui.view" id="game_player_kanban_view">
+            <field name="name">game.player.kanban</field>
+            <field name="model">game.player</field>
+            <field name="arch" type="xml">
+                <kanban>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div>
+                                <strong><t t-esc="record.name.value"/></strong>
+                                <div>
+                                    Level: <t t-esc="record.level.value"/>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
     </data>
 </odoo>

@@ -14,7 +14,8 @@ class player(models.Model):
     level = fields.Integer(default=1)
     dinos = fields.One2many('game.dino', 'player')
     edificios = fields.One2many('game.edificio', 'player')
-    recursos = fields.One2many('game.recurso', 'player')
+    recursos = fields.One2many('game.recurso', 'player', ondelete='cascade')
+
 
     @api.constrains('level')
     def _check_level(self):
