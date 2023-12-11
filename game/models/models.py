@@ -46,7 +46,12 @@ class dino(models.Model):
                 raise ValidationError("Un dino no puede tener un nivel tan bajo: %s" % record.level)
 
     # los carnívoros son los que más les mejora el ataque y menos el daño, los herbívoros al contrario y los omnívoros mejoran igual ambas estadísticas
-    # error -> tengo que desinstalar e instalar de nuevo game
+    @api.model
+    def find_player_by_name(self, player_name):
+        # Devuelve el jugador si lo encuentra, sino devuelve null
+
+        player = self.search([('name', '=', player_name)], limit=1)
+        return player
 
 
     @api.depends('tamany')
