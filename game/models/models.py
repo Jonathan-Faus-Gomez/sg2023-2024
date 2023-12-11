@@ -25,6 +25,8 @@ class player(models.Model):
 
 # valores por defecto
 
+
+#las tropas del ejercito de este juego son dinosaurios
 class dino(models.Model):
     _name = 'game.dino'
     _description = 'Dinosaurio'
@@ -35,7 +37,7 @@ class dino(models.Model):
     player = fields.Many2one('game.player')
     vida = fields.Float(compute='_compute_vida')
     ataque = fields.Float(compute='_compute_ataque')
-    tamany = fields.Selection([('1','Enano'), ('2','Pequeño'), ('4','Mediano'), ('8','Grande'), ('16','Gigante')])
+    tamany = fields.Selection([('1', 'Enano'), ('2', 'Pequeño'), ('3', 'Mediano'), ('4', 'Grande'), ('5', 'Gigante')])
     ocupa = fields.Integer(compute='_compute_ocupa')
 
     @api.constrains('level')
@@ -47,25 +49,26 @@ class dino(models.Model):
     # los carnívoros son los que más les mejora el ataque y menos el daño, los herbívoros al contrario y los omnívoros mejoran igual ambas estadísticas
     # error -> tengo que desinstalar e instalar de nuevo game
 
-
     @api.depends('tamany')
     def _compute_ocupa(self):
         for record in self:
-            if record.tamany == 'Enano':
-                record.ocupa=1
-            if record.tamany == 'Pequeño':
-                record.ocupa=2
-            if record.tamany == 'Mediano':
-                record.ocupa=4
-            if record.tamany == 'Grande':
-                record.ocupa=8
-            if record.tamany == 'Gigante':
-                record.ocupa=16
-
+            if record.tamany == '1':
+                record.ocupa = 1
+            elif record.tamany == '2':
+                record.ocupa = 2
+            elif record.tamany == '3':
+                record.ocupa = 4
+            elif record.tamany == '4':
+                record.ocupa = 8
+            elif record.tamany == '5':
+                record.ocupa = 16
+            else:
+                record.ocupa = 0  # no deberia pasar(si pasa sus estadisticas serán todas 0 al multiplicar por 0)
 
     @api.depends('level')
     def _compute_vida(self):
         for record in self:
+            record.vida = 1
             if record.tipo == '1':  # Carnívoro
                 record.vida = 70 * record.level * 0.7 * record.ocupa
             elif record.tipo == '2':  # Herbívoro
@@ -76,6 +79,7 @@ class dino(models.Model):
     @api.depends('level')
     def _compute_ataque(self):
         for record in self:
+            record.ataque = 0
             if record.tipo == '1':  # Carnívoro
                 record.ataque = 30 * record.level * 0.7 * record.ocupa
             elif record.tipo == '2':  # Herbívoro
@@ -108,11 +112,11 @@ class edificio(models.Model):
         for record in self:
             if record.tipo == '1':
                 record.vida = 1000 * record.level * 0.6
-            if record.tipo == '2':
+            elif record.tipo == '2':
                 record.vida = 900 * record.level * 0.6
-            if record.tipo == '1':
+            elif record.tipo == '3':
                 record.vida = 600 * record.level * 0.6
-            if record.tipo == '1':
+            elif record.tipo == '4':
                 record.vida = 750 + record.level * 0.6
 
         # ALMACEN
