@@ -7,11 +7,12 @@
             <field name="arch" type="xml">
                 <tree string="Dinos">
                     <field name="name"/>
-                    <field name="level"/>
                     <field name="tipo"/>
                     <field name="vida"/>
                     <field name="ataque"/>
                     <field name="player"/>
+                    <field name="tamany"/>
+                    <field name="ocupa"/>
                 </tree>
             </field>
         </record>
@@ -25,10 +26,9 @@
                         <group>
                             <field name="name"/>
                             <field name="level"/>
-                            <field name="vida"/>
-                            <field name="ataque"/>
                             <field name="tipo"/>
                             <field name="player"/>
+                            <field name="tamany"/>
                         </group>
                     </sheet>
                 </form>

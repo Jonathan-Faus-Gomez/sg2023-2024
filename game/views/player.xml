@@ -25,7 +25,6 @@
                     <sheet>
                         <group>
                             <field name="name"/>
-                            <field name="level"/>
                             <field name="edificios"/>
                             <field name="dinos"/>
                             <field name="recursos"/>
@@ -43,16 +42,24 @@
                 <kanban>
                     <templates>
                         <t t-name="kanban-box">
-                            <div>
-                                <strong><t t-esc="record.name.value"/></strong>
-                                <div>
-                                    Level: <t t-esc="record.level.value"/>
-                                </div>
+                            <div class="oe_kanban_title">
+                                <strong >
+                                    <field name="name"/>
+                                </strong>
+                            </div>
+                            <div class="oe_kanban_details">
+                                <field name="level"/>
+                                <!--
+                                <img class="oe_kanban_image"
+                                        t-att-alt="record.name.value"
+                                        t-att-src="kanban_image('game.player', 'foto', record.id.value)" />
+                                 -->
                             </div>
                         </t>
                     </templates>
                 </kanban>
             </field>
         </record>
+
     </data>
 </odoo>
