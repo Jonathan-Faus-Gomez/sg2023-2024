@@ -1,5 +1,6 @@
 <odoo>
     <data>
+vesprada
 
 
         <record model="ir.ui.view" id="game_player_tree_view">

@@ -18,8 +18,15 @@
                 <form>
                     <sheet>
                         <group>
+                            <field name="name"/>
+                            <field name="player1" />
+                            <field name="player2"/>
                             <field name="start"/>
                             <field name="end"/>
+                            <field name="tiempo_total"/>
+                            <field name="tiempo_restante"/>
+                            <field name="progeso" widget="progressbar"/>
+
                         </group>
                     </sheet>
                 </form>

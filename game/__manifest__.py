@@ -31,7 +31,8 @@
         'views/player.xml',
         'views/dino.xml',
         'views/recurso.xml',
-        'views/edificio.xml'
+        'views/edificio.xml',
+        'cron/cron.xml'
     ],
     # only loaded in demonstration mode
     'demo': [

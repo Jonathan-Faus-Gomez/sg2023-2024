@@ -158,6 +158,30 @@ class batalla(models.Model):
     _name = 'game.batalla'
     _description = 'Batalla'
 
-    start = fields.Datetime()
-    end = fields.Datetime()
     name = fields.Char()
+    start = fields.Datetime(default=lambda self: fields.Datetime.now())
+    end = fields.Datetime(compute='_compute_end')
+    tiempo_total = fields.Integer(compute='_compute_end')
+    tiempo_restante = fields.Char(compute='_compute_end')
+    progreso = fields.Float(compute='_compute_end')
+    player1 = fields.Many2one('game.player')
+    player2 = fields.Many2one('game.player')
+
+    @api.depends('start')
+    def _get_data_end(self):
+        for t in self:
+            fecha_start = fields.Datetime.from_string(t.start)
+            fecha_end = fecha_start + timedelta(hours=2)
+
+            t.end = fields.Datetime.to_string(date_end)
+            t.tiempo_total = (date_end - date_start).total_seconds() / 60
+            restante = relativedelta(fecha_end, datetime.now())
+            t.tiempo_restante = str(restante.hours) + ":" + str(restante.minutes) + ":" + str(restante.seconds)
+
+
+            tiempo_transcurrido = (datetime.now() - date_start).total_seconds()  # paso todo a segundos
+            t.progreso = (tiempo_transcurrido * 100) / (t.tiempo_total * 60)
+
+            if t.progreso > 100:
+                t.progreso = 100
+                t.tiempo_restante = '00:00:00'
