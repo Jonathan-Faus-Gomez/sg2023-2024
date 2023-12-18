@@ -25,7 +25,7 @@
                             <field name="end"/>
                             <field name="tiempo_total"/>
                             <field name="tiempo_restante"/>
-                            <field name="progeso" widget="progressbar"/>
+                            <field name="progreso" widget="progressbar"/>
 
                         </group>
                     </sheet>

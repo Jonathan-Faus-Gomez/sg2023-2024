@@ -32,11 +32,6 @@
       <field name="res_model">game.edificio</field>
       <field name="view_mode">tree,form</field>
     </record>
-    <record model="ir.actions.act_window" id="game.action_recurso">
-      <field name="name">Recurso window</field>
-      <field name="res_model">game.recurso</field>
-      <field name="view_mode">tree,form</field>
-    </record>
 
   <record model="ir.actions.act_window" id="game.action_batalla">
     <field name="name">Batallas window</field>
@@ -79,8 +74,6 @@
               action="game.action_dino"/>
     <menuitem name="Edificio" id="game.menu_1_edificio" parent="game.menu_1"
               action="game.action_edificio"/>
-    <menuitem name="Recurso" id="game.menu_1_recurso" parent="game.menu_1"
-              action="game.action_recurso"/>
     <menuitem name="Batalla" id="game.menu_1_batalla" parent="game.menu_1"
               action="game.action_batalla"/>
   </data>

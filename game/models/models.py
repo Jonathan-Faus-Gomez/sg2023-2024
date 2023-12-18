@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
+from datetime import timedelta, datetime
 
+from dateutil.relativedelta import relativedelta
 from odoo import models, fields, api
 from odoo.exceptions import ValidationError
 
@@ -13,9 +15,19 @@ class player(models.Model):
     name = fields.Char(required=True)
     level = fields.Integer(default=1)
     dinos = fields.One2many('game.dino', 'player')
-    edificios = fields.One2many('game.edificio', 'player')
-    recursos = fields.One2many('game.recurso', 'player', ondelete='cascade')
+    edificios = fields.One2many('game.edificio', 'player', ondelete='cascade')
 
+
+    carne = fields.Integer(default=3000)
+    vegetal = fields.Integer(default=3000)
+    oro = fields.Integer(default=10000)
+
+    def update_player_resources(self):
+        for edificio in self.edificios:
+            if edificio.tipo == '4':  # Produccion
+                    self.oro += edificio.produccionOro
+                    self.carne += edificio.produccionCarne
+                    self.vegetal += edificio.produccionVegetal
 
     @api.constrains('level')
     def _check_level(self):
@@ -27,7 +39,7 @@ class player(models.Model):
 # valores por defecto
 
 
-#las tropas del ejercito de este juego son dinosaurios
+# las tropas del ejercito de este juego son dinosaurios
 class dino(models.Model):
     _name = 'game.dino'
     _description = 'Dinosaurio'
@@ -95,7 +107,7 @@ class dino(models.Model):
 
 
 # valores por defecto
-# relacion con recursos
+
 # ataque tener limite y cada dino ocupe espacio
 class edificio(models.Model):
     _name = 'game.edificio'
@@ -103,11 +115,31 @@ class edificio(models.Model):
 
     name = fields.Char()
     tipo = fields.Selection([('1', 'Almacen'), ('2', 'Defensa'), ('3', 'Ataque'), ('4', 'Produccion')])
+    tipoProduccion = fields.Selection([('1', 'Oro'), ('2', 'Carne'), ('3', 'Vegetal')])
     level = fields.Integer(default=1)
     player = fields.Many2one('game.player')
     vida = fields.Integer()
 
-    #produccion
+
+    produccionOro = fields.Float(compute='_compute_produccionOro')
+    produccionCarne = fields.Float(compute='_compute_produccionCarne')
+    produccionVegetal = fields.Float(compute='_compute_produccionVegetal')
+    @api.depends('level')
+    def _compute_produccion(self):
+        for record in self:
+            record.produccionOro = 0
+            record.produccionCarne = 0
+            record.produccionVegetal = 0
+            if record.tipo == '4':
+                if record.tipoProduccion == '1':
+                    record.produccionOro = record.level * 1000
+                elif record.tipoProduccion == '2':
+                    record.produccionCarne = record.level * 50
+                elif record.tipoProduccion == '3':
+                    record.produccionVegetal = record.level * 50
+
+
+
 
     @api.constrains('level')
     def _check_level(self):
@@ -128,7 +160,7 @@ class edificio(models.Model):
                 record.vida = 750 + record.level * 0.6
 
         # ALMACEN
-        cantidad = fields.Integer(string='Cantidad', compute='_compute_cantidad')
+        capacidadMaxima = fields.Integer(string='capacidadMaxima', compute='_compute_cantidad')
 
         @api.depends('tipo')
         def _compute_cantidad(self):
@@ -144,27 +176,6 @@ class edificio(models.Model):
             for edificio in self:
                 if edificio.tipo == '2':
                     edificio.ataque = 100 * edificio.level * 0.8
-
-
-class recurso(models.Model):
-    _name = 'game.recurso'
-    _description = 'Recurso'
-
-    name = fields.Char()
-    tipo = fields.Selection([('1', 'Carne'), ('2', 'Vegetal'), ('3', 'Oro')])
-    cantidad = fields.Integer()
-    player = fields.Many2one('game.player')
-
-    def update_player_resources(self):
-        for building in self.edificios:
-            if building.tipo == '4':  # Produccion
-                # si edificio es carne sumar carne, igual con los demás
-                pass
-
-
-
-
-
 class batalla(models.Model):
     _name = 'game.batalla'
     _description = 'Batalla'
@@ -178,19 +189,20 @@ class batalla(models.Model):
     player1 = fields.Many2one('game.player')
     player2 = fields.Many2one('game.player')
 
+
+
     @api.depends('start')
     def _get_data_end(self):
         for t in self:
             fecha_start = fields.Datetime.from_string(t.start)
             fecha_end = fecha_start + timedelta(hours=2)
 
-            t.end = fields.Datetime.to_string(date_end)
-            t.tiempo_total = (date_end - date_start).total_seconds() / 60
+            t.end = fields.Datetime.to_string(fecha_end)
+            t.tiempo_total = (fecha_end - fecha_start).total_seconds() / 60
             restante = relativedelta(fecha_end, datetime.now())
             t.tiempo_restante = str(restante.hours) + ":" + str(restante.minutes) + ":" + str(restante.seconds)
 
-
-            tiempo_transcurrido = (datetime.now() - date_start).total_seconds()  # paso todo a segundos
+            tiempo_transcurrido = (datetime.now() - fecha_start).total_seconds()  # paso todo a segundos
             t.progreso = (tiempo_transcurrido * 100) / (t.tiempo_total * 60)
 
             if t.progreso > 100:

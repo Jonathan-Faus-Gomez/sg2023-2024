@@ -12,7 +12,9 @@ vesprada
                     <field name="level"/>
                     <field name="dinos"/>
                     <field name="edificios"/>
-                    <field name="recursos"/>
+                    <field name="oro"/>
+                    <field name="carne"/>
+                    <field name="vegetal"/>
                 </tree>
             </field>
         </record>
@@ -28,7 +30,9 @@ vesprada
                             <field name="name"/>
                             <field name="edificios"/>
                             <field name="dinos"/>
-                            <field name="recursos"/>
+                            <field name="oro"/>
+                            <field name="carne"/>
+                            <field name="vegetal"/>
                         </group>
                     </sheet>
                 </form>

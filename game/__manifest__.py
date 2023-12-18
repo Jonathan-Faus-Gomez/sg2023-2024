@@ -30,7 +30,6 @@
         'views/templates.xml',
         'views/player.xml',
         'views/dino.xml',
-        'views/recurso.xml',
         'views/edificio.xml',
         'cron/cron.xml'
     ],
