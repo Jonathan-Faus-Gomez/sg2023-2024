@@ -107,6 +107,8 @@ class edificio(models.Model):
     player = fields.Many2one('game.player')
     vida = fields.Integer()
 
+    #produccion
+
     @api.constrains('level')
     def _check_level(self):
         for record in self:
@@ -152,6 +154,15 @@ class recurso(models.Model):
     tipo = fields.Selection([('1', 'Carne'), ('2', 'Vegetal'), ('3', 'Oro')])
     cantidad = fields.Integer()
     player = fields.Many2one('game.player')
+
+    def update_player_resources(self):
+        for building in self.edificios:
+            if building.tipo == '4':  # Produccion
+                # si edificio es carne sumar carne, igual con los demás
+                pass
+
+
+
 
 
 class batalla(models.Model):

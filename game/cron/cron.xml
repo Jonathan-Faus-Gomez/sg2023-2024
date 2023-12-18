@@ -14,8 +14,8 @@
             <field name="doall" eval="False" />
         </record>
 
-        <!-- Cron para actualizar recursos de la ciudad -->
-        <record model="ir.cron" forcecreate="True" id="game_cron_update_city_resources">
+        <!-- Cron para actualizar los recursos -->
+        <record model="ir.cron" forcecreate="True" id="game_cron_update_resources">
             <field name="name">Game: Cron Actualizar Recursos del jugador</field>
             <field name="model_id" ref="your_module.model_game_player"/>
             <field name="state">code</field>
