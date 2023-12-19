@@ -35,6 +35,11 @@ class player(models.Model):
             if record.level < 1:
                 raise ValidationError("No puedes tener un nivel tan bajo: %s" % record.level)
 
+    @api.onchange('name')
+    def _onchange_name(self):
+        if self.name == 'Admin':
+            self.name = ''
+            return { 'warning' : {'title':'Nombre inapropiado','message':'No puedes llamarte Admin'}}
 
 # valores por defecto
 
