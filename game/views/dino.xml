@@ -1747,6 +1747,9 @@ AABJRU5ErkJggg=='" t-att-alt="record.name"/>
                     <div class="oe_kanban_details">
                         <field name="level"/>
                     </div>
+                    <div>
+                        <field name="tipo"/>
+                    </div>
                 </t>
             </templates>
         </kanban>
