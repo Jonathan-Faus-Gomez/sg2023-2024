@@ -8,6 +8,7 @@
                 <tree string="Dinos">
                     <field name="name"/>
                     <field name="tipo"/>
+                    <field name="level"/>
                     <field name="vida"/>
                     <field name="ataque"/>
                     <field name="player"/>
