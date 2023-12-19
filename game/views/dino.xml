@@ -49,8 +49,10 @@
                             </strong>
                         </div>
                         <div class="oe_kanban_details">
-                            <field name="level"/>
                             <field name="tipo"/>
+                        </div>
+                        <div class="oe_kanban_details">
+                            <field name="level"/>
                         </div>
 
                         <div class="oe_kanban_image">
