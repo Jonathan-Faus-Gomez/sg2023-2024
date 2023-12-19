@@ -7,6 +7,8 @@ import os
 import logging
 
 _logger = logging.getLogger(__name__)
+
+
 # from odoo.exceptions import ValidationError
 
 
@@ -18,20 +20,26 @@ class player(models.Model):
 
     name = fields.Char(required=True)
     level = fields.Integer(default=1)
-    dinos = fields.One2many('game.dino', 'player',domain=[('level','>',1)])
+    dinos = fields.One2many('game.dino', 'player', domain=[('level', '>', 1)])
     edificios = fields.One2many('game.edificio', 'player', ondelete='cascade')
-
 
     carne = fields.Integer(default=3000)
     vegetal = fields.Integer(default=3000)
     oro = fields.Integer(default=10000)
 
     def update_player_resources(self):
-        for edificio in self.edificios:
-            if edificio.tipo == '4':  # Produccion
-                    self.oro += edificio.produccionOro
-                    self.carne += edificio.produccionCarne
-                    self.vegetal += edificio.produccionVegetal
+        for player in self.search([]):
+            oro = player.oro
+            carne = player.carne
+            vegetal = player.vegetal
+            for edificio in player.edificio:
+                oro += edificio.produccionOro
+                vegetal += edificio.produccionVegetal
+                carne += edificio.produccionCarne
+
+            player.oro = oro
+            player.carne = carne
+            player.vegetal = vegetal
 
     @api.constrains('level')
     def _check_level(self):
@@ -46,6 +54,7 @@ class player(models.Model):
         if existing_player:
             self.name = ''
             return {'warning': {'title': 'Nombre usado', 'message': 'Ese nombre ya está en uso por otro jugador'}}
+
 
 # valores por defecto
 
@@ -63,23 +72,12 @@ class dino(models.Model):
     ataque = fields.Float(compute='_compute_ataque')
     tamany = fields.Selection([('1', 'Enano'), ('2', 'Pequeño'), ('3', 'Mediano'), ('4', 'Grande'), ('5', 'Gigante')])
     ocupa = fields.Integer(compute='_compute_ocupa')
-    imagen = fields.Image("Imagen",compute='_compute_imagen',store=True)
-
-
 
     @api.constrains('level')
     def _check_level(self):
         for record in self:
             if record.level < 1:
                 raise ValidationError("Un dino no puede tener un nivel tan bajo: %s" % record.level)
-
-    @api.depends('tipo')
-    def _compute_imagen(self):
-        for record in self:
-            image_path = os.path.join('game', 'static', 'dino_images', f'{record.tipo}.png')
-            _logger.info("Ruta completa del archivo: %s", image_path)
-            with open(image_path, 'rb') as f:
-                record.imagen = base64.b64encode(f.read())
 
     # los carnívoros son los que más les mejora el ataque y menos el daño, los herbívoros al contrario y los omnívoros mejoran igual ambas estadísticas
     @api.model
@@ -142,10 +140,10 @@ class edificio(models.Model):
     player = fields.Many2one('game.player')
     vida = fields.Integer()
 
-
     produccionOro = fields.Float(compute='_compute_produccionOro')
     produccionCarne = fields.Float(compute='_compute_produccionCarne')
     produccionVegetal = fields.Float(compute='_compute_produccionVegetal')
+
     @api.depends('level')
     def _compute_produccion(self):
         for record in self:
@@ -159,9 +157,6 @@ class edificio(models.Model):
                     record.produccionCarne = record.level * 50
                 elif record.tipoProduccion == '3':
                     record.produccionVegetal = record.level * 50
-
-
-
 
     @api.constrains('level')
     def _check_level(self):
@@ -198,6 +193,8 @@ class edificio(models.Model):
             for edificio in self:
                 if edificio.tipo == '2':
                     edificio.ataque = 100 * edificio.level * 0.8
+
+
 class batalla(models.Model):
     _name = 'game.batalla'
     _description = 'Batalla'
@@ -210,8 +207,6 @@ class batalla(models.Model):
     progreso = fields.Float(compute='_compute_end')
     player1 = fields.Many2one('game.player')
     player2 = fields.Many2one('game.player')
-
-
 
     @api.depends('start')
     def _get_data_end(self):
