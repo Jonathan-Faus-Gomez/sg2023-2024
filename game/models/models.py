@@ -230,7 +230,7 @@ class batalla(models.Model):
     _name = 'game.batalla'
     _description = 'Batalla'
 
-    nombre = fields.Char()
+    name = fields.Char()
     inicio = fields.Datetime(default=lambda self: fields.Datetime.now())
     fin = fields.Datetime(compute='_calcular_fin')
     tiempo_total = fields.Integer(compute='_calcular_fin')
