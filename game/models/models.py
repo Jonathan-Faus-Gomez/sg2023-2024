@@ -37,9 +37,11 @@ class player(models.Model):
 
     @api.onchange('name')
     def _onchange_name(self):
-        if self.name == 'Admin':
+        # Verifico si algun player ya tiene ese nombre
+        existing_player = self.env['game.player'].search([('name', '=', self.name)])
+        if existing_player:
             self.name = ''
-            return { 'warning' : {'title':'Nombre inapropiado','message':'No puedes llamarte Admin'}}
+            return {'warning': {'title': 'Nombre usado', 'message': 'Ese nombre ya está en uso por otro jugador'}}
 
 # valores por defecto
 
