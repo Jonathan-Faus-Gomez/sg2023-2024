@@ -39,6 +39,9 @@
             <field name="model">game.batalla</field>
             <field name="arch" type="xml">
                 <tree>
+                    <field name="name"/>
+                    <field name="player1" />
+                    <field name="player2"/>
                     <field name="inicio"/>
                     <field name="fin"/>
                 </tree>
