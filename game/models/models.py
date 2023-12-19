@@ -3,7 +3,7 @@ from datetime import timedelta, datetime
 
 from dateutil.relativedelta import relativedelta
 from odoo import models, fields, api
-from odoo.exceptions import ValidationError
+# from odoo.exceptions import ValidationError
 
 
 # probar demo
@@ -14,7 +14,7 @@ class player(models.Model):
 
     name = fields.Char(required=True)
     level = fields.Integer(default=1)
-    dinos = fields.One2many('game.dino', 'player')
+    dinos = fields.One2many('game.dino', 'player',domain=[('level','>',1)])
     edificios = fields.One2many('game.edificio', 'player', ondelete='cascade')
 
 
