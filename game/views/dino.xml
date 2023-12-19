@@ -43,7 +43,7 @@
                     <templates>
                         <t t-name="kanban-box">
                             <div class="oe_kanban_image">
-                                <img t-att-src="'/web/image/game.dino/' + escape(record.id) + '/image'"/>
+                                <img t-att-src="'/web/image/game.dino/' + record.id + '/image'"/>
                             </div>
                             <div class="oe_kanban_title">
                                 <strong>
