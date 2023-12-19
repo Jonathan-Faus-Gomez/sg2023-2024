@@ -286,6 +286,6 @@ class batalla(models.Model):
             tiempo_pasado = (datetime.now() - fecha_inicio).total_seconds() / 60
             restante = fecha_fin - datetime.now()
 
-            record.tiempo_restante = "{:02}:{:02}:{:02}".format(restante.seconds // 3600, (restante.seconds // 60),restante.seconds % 60)
-                                        #  2 DIGITOS         HORAS->SEGUNDOS/3600 MINUTOS->SEGUNDOS/60 SEGUNDOS->SEGUNDOS%60
+            record.tiempo_restante = "{:02}:{:02}:{:02}".format(restante.seconds // 3600, (restante.seconds // 60) % 60,restante.seconds % 60)
+                                        #  2 DIGITOS         HORAS->SEGUNDOS/3600 MINUTOS->SEGUNDOS/60 % 60  SEGUNDOS->SEGUNDOS%60
             record.progreso = (tiempo_pasado * 100) / record.tiempo_total
