@@ -265,13 +265,6 @@ class batalla(models.Model):
             if not record.finalizado and record.progreso >= 100:
                 record.calcular_batalla(record.player1, record.player2)
                 record.write({'progreso': 100.00})
-
-    def finalizar_batalla(self):
-        for record in self:
-            if not record.finalizado:
-                record.calcular_batalla(record.player1, record.player2)
-                record.write({'progreso': 100.00, 'finalizado': True})
-
     @api.depends('inicio')
     def _calcular_fin(self):
         for record in self:
