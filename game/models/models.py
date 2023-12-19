@@ -24,7 +24,7 @@ class player(models.Model):
     edificios = fields.One2many('game.edificio', 'player', ondelete='cascade')
 
     batallas = fields.Many2many('game.batalla')
-    poder= fields.Integer(_compute_poder)
+    poder= fields.Integer(compute='_compute_poder')
 
     carne = fields.Integer(default=3000)
     vegetal = fields.Integer(default=3000)
