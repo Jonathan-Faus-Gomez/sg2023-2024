@@ -47,6 +47,13 @@ class player(models.Model):
             if record.level < 1:
                 raise ValidationError("No puedes tener un nivel tan bajo: %s" % record.level)
 
+    @api.constrains('dinos')
+    def _calcular_espacio(self):
+        for record in self:
+            sum_tamany = sum(record.dinos.mapped('tamany'))
+            if sum_tamany > 40:
+                raise ValidationError("No caben más dinos en el campamento")
+
     @api.onchange('name')
     def _onchange_name(self):
         # Verifico si algun player ya tiene ese nombre
@@ -138,12 +145,17 @@ class edificio(models.Model):
     tipoProduccion = fields.Selection([('1', 'Oro'), ('2', 'Carne'), ('3', 'Vegetal')])
     level = fields.Integer(default=1)
     player = fields.Many2one('game.player')
-    vida = fields.Integer()
+    vida = fields.Integer(compute='_compute_vida')
 
     produccionOro = fields.Float(compute='_compute_produccionOro')
     produccionCarne = fields.Float(compute='_compute_produccionCarne')
     produccionVegetal = fields.Float(compute='_compute_produccionVegetal')
 
+    # ALMACEN
+    capacidadMaxima = fields.Integer(string='capacidadMaxima', compute='_compute_cantidad')
+
+    # DEFENSA
+    ataque = fields.Integer(string='Ataque', compute='_compute_ataque')
     @api.depends('level')
     def _compute_produccion(self):
         for record in self:
@@ -176,17 +188,15 @@ class edificio(models.Model):
             elif record.tipo == '4':
                 record.vida = 750 + record.level * 0.6
 
-        # ALMACEN
-        capacidadMaxima = fields.Integer(string='capacidadMaxima', compute='_compute_cantidad')
+
 
         @api.depends('tipo')
         def _compute_cantidad(self):
             for edificio in self:
                 if edificio.tipo == '1':
-                    edificio.cantidad = 10000 * edificio.level
+                    edificio.capacidadMaxima = 100 * edificio.level
 
-        # DEFENSA
-        ataque = fields.Integer(string='Ataque', compute='_compute_ataque')
+
 
         @api.depends('tipo')
         def _compute_ataque(self):

@@ -24,7 +24,6 @@
                         <group>
                             <field name="name"/>
                             <field name="level"/>
-                            <field name="vida"/>
                             <field name="tipo"/>
                             <field name="tipoProduccion" attrs="{'invisible':[('tipo', '!=', '4')]}"/>
                             <field name="player"/>
