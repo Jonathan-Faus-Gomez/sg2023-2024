@@ -36,14 +36,14 @@
         </record>
 
         <record model="ir.ui.view" id="game_dino_kanban_view">
-            <field name="name">game.dino.kanban</field>
-            <field name="model">game.dino</field>
-            <field name="arch" type="xml">
-                <kanban>
-                    <templates>
-                        <t t-name="kanban-box">
-                            <div class="oe_kanban_image">
-                                <img attrs="{'invisible':[('tipo', '!=', '1')]}" t-att-src="'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAACnCAYAAABU+hMRAAAAAXNSR0IArs4c6QAA
+    <field name="name">game.dino.kanban</field>
+    <field name="model">game.dino</field>
+    <field name="arch" type="xml">
+        <kanban>
+            <templates>
+                <t t-name="kanban-box">
+                    <div class="oe_kanban_image">
+                        <img attrs="{'invisible':[('tipo', '!=', '1')]}" t-att-src="'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAACnCAYAAABU+hMRAAAAAXNSR0IArs4c6QAA
 AARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAF4aSURBVHhe7X0H
 gB3VdfaZ/vq+7X2lXXXUQBLqEl0CjDDFBFxw/V3ATmwTY8eOS+KSOHGLiRu4EHfH
 kMR0I4oN6oAK6l3aru3l9an/OffObJF2pZW0ElrpfU+jmZ2ZNzPvzvnuOefec88V
@@ -548,7 +548,7 @@ bNu8HXbu2g7V1dWwa9dO6O2JC7as/77+4DGeBiWLixoXpQbxsOSmWQvkTOR3NKKQ
 b/N1Ms6nRnBEs8PwdU5b/+zuNrYji4selwRBBmLRrdU5UiYyTbT8U5EoNG1COYr+
 ZDzkTpjuFYlHEArHoRxBaJkJ5hoz2PoBNvV0FpcAAP4/wn/pNmrgFRYAAAAASUVO
 RK5CYII='" t-att-alt="record.name"/>
-                                <img attrs="{'invisible':[('tipo', '!=', '2')]}" t-att-src="'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAAC0CAYAAADRuGMkAAAAAXNSR0IArs4c6QAA
+                        <img attrs="{'invisible':[('tipo', '!=', '2')]}" t-att-src="'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAAC0CAYAAADRuGMkAAAAAXNSR0IArs4c6QAA
 AARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAH//SURBVHhe7V0H
 eFzFtT67q7a76r3Lliyr2JZ7xQbbmBbA9BJKAoSa8NII6e0leakvCUlIQgLhERJ6
 Qu/dBkwx7kWyZPVed1fb+zv/3Hulq9WumuVCrF/faHdvvzPnzClz5oyGTjDc950f
@@ -1233,7 +1233,8 @@ M2aXZ8cU5z/EVvtG/E5KSGBjPZb0sXEUFxsjjHJESiMSAcCI+radO8lusdp87d1X
 avRxzqjs9Fq2Osx8zeOeoCEcZhhkBkeE8844KyYYDGBAFTmBMZ8cTDUUoqsWQQB+
 s872yovvbT1bbDjBMcMgM5gWXHbZZZonnngieO6mTXomqyyNRpPFmzEJrJxLApsn
 oDU3S6aaYCDw/AtvvDG2N+CEANH/A3sw2c1aKXqDAAAAAElFTkSuQmCC'" t-att-alt="record.name"/>
-                                <img attrs="{'invisible':[('tipo', '!=', '3')]}" t-att-src="'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAAC/CAYAAAC7f5PnAAAAAXNSR0IArs4c6QAA
+                        <img attrs="{'invisible':[('tipo', '!=', '3')]}" t-att-src="'data:image/png;base64,-----BEGIN CERTIFICATE-----
+iVBORw0KGgoAAAANSUhEUgAAAMgAAAC/CAYAAAC7f5PnAAAAAXNSR0IArs4c6QAA
 AARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAF3vSURBVHhe7Z0H
 gJxVtcfP9N5np2zvvSSb3iCEgKH3LggoIKCigg31qU+QquBTKQIi2ECqgA0SAgnp
 JJtsspvd7GazdXrvfd49d2aSbUk2yabB98NxZr75ZnZ3cv/fKffcczlwkpg5c6b8
@@ -1737,20 +1738,21 @@ c/bdoVAIdmxvJ3GKG7r79RCKaYiFCdNSdex5FQjYfkyE8SGLxR3YufNvY4MUBoZp
 7K/dYmA4npwyAnn5Nz//hkZf8OvdHbs8kXDwN1t2uP4x7JDXkVA8EYsF9rBY/Pb2
 9j9n2pozMJwgThmB/OzbtzzE5vAcfo/9hUefe4vZRozhFADg/wFl/gthreto5gAA
 AABJRU5ErkJggg=='" t-att-alt="record.name"/>
-                            </div>
-                            <div class="oe_kanban_title">
-                                <strong>
-                                    <field name="name"/>
-                                </strong>
-                            </div>
-                            <div class="oe_kanban_details">
-                                <field name="level"/>
-                            </div>
-                        </t>
-                    </templates>
-                </kanban>
-            </field>
-        </record>
+                    </div>
+                    <div class="oe_kanban_title">
+                        <strong>
+                            <field name="name"/>
+                        </strong>
+                    </div>
+                    <div class="oe_kanban_details">
+                        <field name="level"/>
+                    </div>
+                </t>
+            </templates>
+        </kanban>
+    </field>
+</record>
+
 
 
 
