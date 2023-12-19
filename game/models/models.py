@@ -190,19 +190,19 @@ class edificio(models.Model):
 
 
 
-        @api.depends('tipo')
-        def _compute_cantidad(self):
-            for edificio in self:
-                if edificio.tipo == '1':
-                    edificio.capacidadMaxima = 100 * edificio.level
+    @api.depends('tipo')
+    def _compute_cantidad(self):
+        for edificio in self:
+            if edificio.tipo == '1':
+                edificio.capacidadMaxima = 100 * edificio.level
 
 
 
-        @api.depends('tipo')
-        def _compute_ataque(self):
-            for edificio in self:
-                if edificio.tipo == '2':
-                    edificio.ataque = 100 * edificio.level * 0.8
+    @api.depends('tipo')
+    def _compute_ataque(self):
+        for edificio in self:
+            if edificio.tipo == '2':
+                edificio.ataque = 100 * edificio.level * 0.8
 
 
 class batalla(models.Model):
