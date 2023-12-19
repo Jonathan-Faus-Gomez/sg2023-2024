@@ -233,6 +233,7 @@ class batalla(models.Model):
     progreso = fields.Float(compute='_calcular_fin')
     player1 = fields.Many2one('game.player', ondelete='set null')
     player2 = fields.Many2one('game.player', ondelete='set null')
+    finalizado = fields.Boolean(default=False)
 
     @api.constrains('player1', 'player2')
     def _verificar_jugadores(self):
@@ -258,16 +259,12 @@ class batalla(models.Model):
         if partida == -1:
             player2.write({'oro': player2.oro + 3000 * player2.level})
             player1.write({'oro': player1.oro - 3000 * player1.level})
-            self.write({'ganador': player2.id})
 
     def update_battles(self):  # cron
-        domain = [('finalizado', '=', False), ('progreso', '>=', 100)]
-        battle_count = self.search_count(domain)
-        battles = self.search(domain, limit=battle_count)
-
-        for record in battles:
-            record.calcular_batalla(record.player1, record.player2)
-            record.write({'finalizado': True})
+        for record in self:
+            if not record.finalizado and record.progreso >= 100:
+                record.calcular_batalla(record.player1, record.player2)
+                record.write({'progreso': 100.00})
 
     def finalizar_batalla(self):
         for record in self:
@@ -286,6 +283,7 @@ class batalla(models.Model):
             tiempo_pasado = (datetime.now() - fecha_inicio).total_seconds() / 60
             restante = fecha_fin - datetime.now()
 
-            record.tiempo_restante = "{:02}:{:02}:{:02}".format(restante.seconds // 3600, (restante.seconds // 60) % 60,restante.seconds % 60)
-                                        #  2 DIGITOS         HORAS->SEGUNDOS/3600 MINUTOS->SEGUNDOS/60 % 60  SEGUNDOS->SEGUNDOS%60
+            record.tiempo_restante = "{:02}:{:02}:{:02}".format(restante.seconds // 3600, (restante.seconds // 60) % 60,
+                                                                restante.seconds % 60)
+            #  2 DIGITOS:02:02         HORAS->SEGUNDOS//3600 MINUTOS->SEGUNDOS//60 % 60  SEGUNDOS->SEGUNDOS%60
             record.progreso = (tiempo_pasado * 100) / record.tiempo_total
