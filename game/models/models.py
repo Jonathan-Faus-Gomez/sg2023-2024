@@ -37,7 +37,7 @@ class player(models.Model):
 
     @api.onchange('name')
     def _onchange_name(self):
-        if self.name.lower() == 'Admin':
+        if self.name == 'Admin':
             self.name = ''
             return { 'warning' : {'title':'Nombre inapropiado','message':'No puedes llamarte Admin'}}
 
