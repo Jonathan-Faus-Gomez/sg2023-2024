@@ -62,6 +62,11 @@ class dino(models.Model):
     ocupa = fields.Integer(compute='_compute_ocupa')
     imagen = fields.Image("Imagen",compute='_compute_imagen',store=True)
 
+    TIPOS_DINO = {
+        '1': 'carnivoro',
+        '2': 'herbivoro',
+        '3': 'omnivoro',
+    }
 
 
     @api.constrains('level')
@@ -73,10 +78,13 @@ class dino(models.Model):
     @api.depends('tipo')
     def _compute_imagen(self):
         for record in self:
-            image_path = os.path.join('game', 'static', 'dino_images', f'{record.tipo.lower()}.png')
-            with open(image_path, 'rb') as f:
-                record.imagen = base64.b64encode(f.read())
-
+            tipo_dino = TIPOS_DINO.get(record.tipo)
+            if tipo_dino:
+                image_path = os.path.join('game', 'static', 'dino_images', f'{tipo_dino}.png')
+                with open(image_path, 'rb') as f:
+                    record.imagen = base64.b64encode(f.read())
+            else:
+                record.imagen = False  # O podrías asignar una imagen por defecto o manejarlo de otra manera
     # los carnívoros son los que más les mejora el ataque y menos el daño, los herbívoros al contrario y los omnívoros mejoran igual ambas estadísticas
     @api.model
     def find_player_by_name(self, player_name):
