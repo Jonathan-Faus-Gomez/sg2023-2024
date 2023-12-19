@@ -42,9 +42,6 @@
                 <kanban>
                     <templates>
                         <t t-name="kanban-box">
-                            <div class="oe_kanban_image">
-                                <img t-att-src="'/web/image/game.dino/' + record.id + '/image'"/>
-                            </div>
                             <div class="oe_kanban_title">
                                 <strong>
                                     <field name="name"/>
@@ -52,7 +49,9 @@
                             </div>
                             <div class="oe_kanban_details">
                                 <field name="level"/>
-                                <field name="tipo"/>
+                            </div>
+                            <div class="oe_kanban_image">
+                                <img t-att-src="'/web/image/game.dino/' + record.id + '/image'"/>
                             </div>
                         </t>
                     </templates>

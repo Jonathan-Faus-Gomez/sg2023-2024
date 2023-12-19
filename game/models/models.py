@@ -69,13 +69,12 @@ class dino(models.Model):
             if record.level < 1:
                 raise ValidationError("Un dino no puede tener un nivel tan bajo: %s" % record.level)
 
-
     @api.depends('tipo')
-    def _compute_image(self):
+    def _compute_imagen(self):
         for record in self:
             image_path = os.path.join('game', 'static', 'dino_images', f'{record.tipo.lower()}.png')
             with open(image_path, 'rb') as f:
-                record.image = base64.b64encode(f.read())
+                record.imagen = base64.b64encode(f.read())
 
     # los carnívoros son los que más les mejora el ataque y menos el daño, los herbívoros al contrario y los omnívoros mejoran igual ambas estadísticas
     @api.model
