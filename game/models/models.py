@@ -49,7 +49,7 @@ class player(models.Model):
             oro = player.oro
             carne = player.carne
             vegetal = player.vegetal
-            for edificio in player.edificio:
+            for edificio in player.edificios:
                 oro += edificio.produccionOro
                 vegetal += edificio.produccionVegetal
                 carne += edificio.produccionCarne
@@ -267,9 +267,12 @@ class batalla(models.Model):
             player1.write({'oro': player1.oro - 3000 * player1.level})
             self.write({'ganador': player2.id})
 
-
     def update_battles(self):
-        for record in self.search([('finalizado', '=', False), ('progreso', '>=', 100)]):
+        domain = [('finalizado', '=', False), ('progreso', '>=', 100)]
+        battle_count = self.search_count(domain)
+        battles = self.search(domain, limit=battle_count)
+
+        for record in battles:
             record.calcular_batalla(record.player1, record.player2)
             record.write({'finalizado': True})
 
