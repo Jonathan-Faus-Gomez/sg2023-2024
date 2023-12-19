@@ -21,9 +21,7 @@
                             <field name="name"/>
                             <field name="player1" />
                             <field name="player2"/>
-                            <field name="inicio"/>
                             <field name="fin"/>
-
                             <field name="progreso" widget="progressbar"/>
 
                         </group>
@@ -44,6 +42,7 @@
                     <field name="inicio"/>
                     <field name="fin"/>
                     <field name="tiempo_restante"/>
+                    <field name="progreso" widget="progressbar"/>
                 </tree>
             </field>
         </record>
