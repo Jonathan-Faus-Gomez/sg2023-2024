@@ -51,8 +51,10 @@ class player(models.Model):
     def _calcular_espacio(self):
         for record in self:
             sum_tamany = sum(record.dinos.mapped('tamany'))
-            if sum_tamany > 40:
-                raise ValidationError("No caben más dinos en el campamento")
+            for edificio in player.edificios:
+                sum_capacidad = sum(edificio.mapped('capacidadMaxima'))
+                if sum_tamany > sum_capacidad:
+                    raise ValidationError("No caben más dinos en el campamento")
 
     @api.onchange('name')
     def _onchange_name(self):

@@ -10,7 +10,6 @@
                     <field name="tipo"/>
                     <field name="level"/>
                     <field name="player"/>
-                    <field name="vida"/>
                 </tree>
             </field>
         </record>
