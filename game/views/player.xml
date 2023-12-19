@@ -40,31 +40,5 @@ vesprada
         </record>
 
 
-        <record model="ir.ui.view" id="game_player_kanban_view">
-            <field name="name">game.player.kanban</field>
-            <field name="model">game.player</field>
-            <field name="arch" type="xml">
-                <kanban>
-                    <templates>
-                        <t t-name="kanban-box">
-                            <div class="oe_kanban_title">
-                                <strong >
-                                    <field name="name"/>
-                                </strong>
-                            </div>
-                            <div class="oe_kanban_details">
-                                <field name="level"/>
-                                <!--
-                                <img class="oe_kanban_image"
-                                        t-att-alt="record.name.value"
-                                        t-att-src="kanban_image('game.player', 'foto', record.id.value)" />
-                                 -->
-                            </div>
-                        </t>
-                    </templates>
-                </kanban>
-            </field>
-        </record>
-
     </data>
 </odoo>

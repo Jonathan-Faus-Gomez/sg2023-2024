@@ -20,7 +20,7 @@
     <record model="ir.actions.act_window" id="game.action_player">
       <field name="name">Player window</field>
       <field name="res_model">game.player</field>
-      <field name="view_mode">tree,form,kanban</field>
+      <field name="view_mode">tree,form</field>
     </record>
     <record model="ir.actions.act_window" id="game.action_dino">
       <field name="name">Dino window</field>

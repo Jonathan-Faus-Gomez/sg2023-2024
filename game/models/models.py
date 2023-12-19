@@ -23,9 +23,26 @@ class player(models.Model):
     dinos = fields.One2many('game.dino', 'player', domain=[('level', '>', 1)])
     edificios = fields.One2many('game.edificio', 'player', ondelete='cascade')
 
+    batallas = fields.Many2many('game.batalla')
+    poder= fields.Integer(_compute_poder)
+
     carne = fields.Integer(default=3000)
     vegetal = fields.Integer(default=3000)
     oro = fields.Integer(default=10000)
+
+    @api.depends('dinos', 'edificios')
+    def _compute_poder(self):
+        for player in self:
+            poder_total = 0
+            for dino in player.dinos:
+                poder_total += dino.vida + dino.ataque
+
+            for edificio in player.edificios:
+                poder_total += edificio.vida + edificio.ataque
+
+            player.poder = poder_total
+
+
 
     def update_player_resources(self):
         for player in self.search([]):
@@ -181,6 +198,7 @@ class edificio(models.Model):
     @api.depends('level')
     def _compute_vida(self):
         for record in self:
+            record.vida = 0
             if record.tipo == '1':
                 record.vida = 1000 * record.level * 0.6
             elif record.tipo == '2':
@@ -203,6 +221,7 @@ class edificio(models.Model):
     @api.depends('tipo')
     def _compute_ataque(self):
         for edificio in self:
+            edificio.ataque=0
             if edificio.tipo == '2':
                 edificio.ataque = 100 * edificio.level * 0.8
 
@@ -211,29 +230,69 @@ class batalla(models.Model):
     _name = 'game.batalla'
     _description = 'Batalla'
 
-    name = fields.Char()
-    start = fields.Datetime(default=lambda self: fields.Datetime.now())
-    end = fields.Datetime(compute='_compute_end')
-    tiempo_total = fields.Integer(compute='_compute_end')
-    tiempo_restante = fields.Char(compute='_compute_end')
-    progreso = fields.Float(compute='_compute_end')
-    player1 = fields.Many2one('game.player')
-    player2 = fields.Many2one('game.player')
+    nombre = fields.Char()
+    inicio = fields.Datetime(default=lambda self: fields.Datetime.now())
+    fin = fields.Datetime(compute='_calcular_fin')
+    tiempo_total = fields.Integer(compute='_calcular_fin')
+    tiempo_restante = fields.Char(compute='_calcular_fin')
+    progreso = fields.Float(compute='_calcular_fin')
+    player1 = fields.Many2one('game.player', ondelete='set null')
+    player2 = fields.Many2one('game.player', ondelete='set null')
 
-    @api.depends('start')
-    def _get_data_end(self):
-        for t in self:
-            fecha_start = fields.Datetime.from_string(t.start)
-            fecha_end = fecha_start + timedelta(hours=2)
+    @api.constrains('player1', 'player2')
+    def _verificar_jugadores(self):
+        for record in self:
+            if record.player1 and record.player2 and record.player1.id == record.player2.id:
+                raise ValidationError("Un jugador no puede atacar a sí mismo")
 
-            t.end = fields.Datetime.to_string(fecha_end)
-            t.tiempo_total = (fecha_end - fecha_start).total_seconds() / 60
-            restante = relativedelta(fecha_end, datetime.now())
-            t.tiempo_restante = str(restante.hours) + ":" + str(restante.minutes) + ":" + str(restante.seconds)
 
-            tiempo_transcurrido = (datetime.now() - fecha_start).total_seconds()  # paso todo a segundos
-            t.progreso = (tiempo_transcurrido * 100) / (t.tiempo_total * 60)
 
-            if t.progreso > 100:
-                t.progreso = 100
-                t.tiempo_restante = '00:00:00'
+    def calcular_batalla(self, player1, player2):
+        partida = 0
+        #0 empate
+        #1 gana player1
+        #-1 gana player2
+
+        if player1.poder > player2.poder:
+            partida = 1
+        elif player2.poder > player1.poder:
+            partida = -1
+
+        if partida == 1:
+            player1.write({'oro': player1.oro + 3000 * player1.level})
+            player2.write({'oro': player2.oro - 3000 * player2.level})
+            self.write({'ganador': player1.id})
+        if partida == -1:
+            player2.write({'oro': player2.oro + 3000 * player2.level})
+            player1.write({'oro': player1.oro - 3000 * player1.level})
+            self.write({'ganador': player2.id})
+
+
+    def update_battles(self):
+        for record in self.search([('finalizado', '=', False), ('progreso', '>=', 100)]):
+            record.calcular_batalla(record.player1, record.player2)
+            record.write({'finalizado': True})
+
+    def finalizar_batalla(self):
+        for record in self:
+            if not record.finalizado:
+                record.calcular_batalla(record.player1, record.player2)
+                record.write({'progreso': 100.00, 'finalizado': True})
+
+    @api.depends('inicio')
+    def _calcular_fin(self):
+        for record in self:
+            fecha_inicio = fields.Datetime.from_string(record.inicio)
+            fecha_fin = fecha_inicio + timedelta(hours=2)
+
+
+
+            record.fin = fields.Datetime.to_string(fecha_fin)
+            record.tiempo_total = (fecha_fin - fecha_inicio).total_seconds() / 60 #minutos
+
+            tiempo_pasado = (datetime.now() - fecha_inicio).total_seconds() / 60
+            restante = fecha_fin - datetime.now()
+            record.tiempo_restante = "{:02}:{:02}:{:02}".format(restante.seconds // 3600, (restante.seconds // 60) % 60,
+                                                                restante.seconds % 60)
+            record.progreso = (tiempo_pasado * 100) / record.tiempo_total
+
