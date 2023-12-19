@@ -25,7 +25,7 @@
     <record model="ir.actions.act_window" id="game.action_dino">
       <field name="name">Dino window</field>
       <field name="res_model">game.dino</field>
-      <field name="view_mode">tree,form</field>
+      <field name="view_mode">tree,form,kanban</field>
     </record>
     <record model="ir.actions.act_window" id="game.action_edificio">
       <field name="name">Edificio window</field>

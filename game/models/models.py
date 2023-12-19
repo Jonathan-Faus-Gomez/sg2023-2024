@@ -59,12 +59,23 @@ class dino(models.Model):
     ataque = fields.Float(compute='_compute_ataque')
     tamany = fields.Selection([('1', 'Enano'), ('2', 'Pequeño'), ('3', 'Mediano'), ('4', 'Grande'), ('5', 'Gigante')])
     ocupa = fields.Integer(compute='_compute_ocupa')
+    imagen = fields.Image(compute='_compute_imagen')
+
+
 
     @api.constrains('level')
     def _check_level(self):
         for record in self:
             if record.level < 1:
                 raise ValidationError("Un dino no puede tener un nivel tan bajo: %s" % record.level)
+
+
+    @api.depends('tipo')
+    def _compute_image(self):
+        for record in self:
+            image_path = os.path.join('game', 'static', 'dino_images', f'{record.tipo.lower()}.png')
+            with open(image_path, 'rb') as f:
+                record.image = base64.b64encode(f.read())
 
     # los carnívoros son los que más les mejora el ataque y menos el daño, los herbívoros al contrario y los omnívoros mejoran igual ambas estadísticas
     @api.model
