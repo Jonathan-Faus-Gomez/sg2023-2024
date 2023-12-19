@@ -36,28 +36,29 @@
         </record>
 
         <record model="ir.ui.view" id="game_dino_kanban_view">
-            <field name="name">game.dino.kanban</field>
-            <field name="model">game.dino</field>
-            <field name="arch" type="xml">
-                <kanban>
-                    <templates>
-                        <t t-name="kanban-box">
-                            <div class="oe_kanban_title">
-                                <strong>
-                                    <field name="name"/>
-                                </strong>
-                            </div>
-                            <div class="oe_kanban_details">
-                                <field name="level"/>
-                            </div>
-                            <div class="oe_kanban_image">
-                                <img t-att-src="'/web/image/game.dino/' + record.id + '/image'"/>
-                            </div>
-                        </t>
-                    </templates>
-                </kanban>
-            </field>
-        </record>
+    <field name="name">game.dino.kanban</field>
+    <field name="model">game.dino</field>
+    <field name="arch" type="xml">
+        <kanban>
+            <templates>
+                <t t-name="kanban-box">
+                    <div class="oe_kanban_image">
+                        <img t-att-src="'/web/image/game.dino/' + record.id + '/imagen'"/>
+                    </div>
+                    <div class="oe_kanban_title">
+                        <strong>
+                            <field name="name"/>
+                        </strong>
+                    </div>
+                    <div class="oe_kanban_details">
+                        <field name="level"/>
+                    </div>
+                </t>
+            </templates>
+        </kanban>
+    </field>
+</record>
+
 
 
     </data>
