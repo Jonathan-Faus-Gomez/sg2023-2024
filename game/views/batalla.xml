@@ -5,7 +5,7 @@
             <field name="name">game.batalla.calendar</field>
             <field name="model">game.batalla</field>
             <field name="arch" type="xml">
-                <calendar string="Batallas" date_start="start" date_stop="end"/>
+                <calendar string="Batallas" date_start="inicio" date_stop="fin"/>
             </field>
         </record>
 
@@ -21,8 +21,8 @@
                             <field name="name"/>
                             <field name="player1" />
                             <field name="player2"/>
-                            <field name="start"/>
-                            <field name="end"/>
+                            <field name="inicio"/>
+                            <field name="fin"/>
                             <field name="tiempo_total"/>
                             <field name="tiempo_restante"/>
                             <field name="progreso" widget="progressbar"/>
@@ -39,8 +39,8 @@
             <field name="model">game.batalla</field>
             <field name="arch" type="xml">
                 <tree>
-                    <field name="start"/>
-                    <field name="end"/>
+                    <field name="inicio"/>
+                    <field name="fin"/>
                 </tree>
             </field>
         </record>
