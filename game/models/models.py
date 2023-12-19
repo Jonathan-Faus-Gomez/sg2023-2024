@@ -73,7 +73,8 @@ class dino(models.Model):
     @api.depends('tipo')
     def _compute_imagen(self):
         for record in self:
-            image_path = os.path.join('game', 'static', 'dino_images', f'{record.tipo.lower()}.png')
+            image_path = '/ruta/absoluta/completa/game/static/dino_images/{}.png'.format(record.tipo.lower())
+            _logger.info("Ruta completa del archivo: %s", image_path)
             with open(image_path, 'rb') as f:
                 record.imagen = base64.b64encode(f.read())
 
