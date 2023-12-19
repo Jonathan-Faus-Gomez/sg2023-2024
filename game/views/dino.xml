@@ -43,7 +43,7 @@
                     <templates>
                         <t t-name="kanban-box">
                             <div class="oe_kanban_image">
-                                <img t-att-src="'/web/image/game.dino/' + str(record.id) + '/image'"/>
+                                <img t-att-src="'/web/image/game.dino/' + escape(record.id) + '/image'"/>
                             </div>
                             <div class="oe_kanban_title">
                                 <strong>
@@ -59,6 +59,7 @@
                 </kanban>
             </field>
         </record>
+
 
     </data>
 </odoo>
