@@ -48,8 +48,6 @@ class player(models.Model):
 
 
 # las tropas del ejercito de este juego son dinosaurios
-
-
 class dino(models.Model):
     _name = 'game.dino'
     _description = 'Dinosaurio'
@@ -66,7 +64,6 @@ class dino(models.Model):
 
 
 
-
     @api.constrains('level')
     def _check_level(self):
         for record in self:
@@ -76,14 +73,10 @@ class dino(models.Model):
     @api.depends('tipo')
     def _compute_imagen(self):
         for record in self:
-            tipo_name = record.get_tipo_display().lower()  # Obtiene el nombre del tipo en minúsculas
-            image_path = os.path.join('game', 'static', 'dino_images', f'{tipo_name}.png')
+            image_path = os.path.join('game', 'static', 'dino_images', f'{record.tipo.lower()}.png')
+            with open(image_path, 'rb') as f:
+                record.imagen = base64.b64encode(f.read())
 
-            try:
-                with open(image_path, 'rb') as f:
-                    record.imagen = base64.b64encode(f.read())
-            except FileNotFoundError:
-                record.imagen = False  # O manejar de otra manera si el archivo no se encuentra
     # los carnívoros son los que más les mejora el ataque y menos el daño, los herbívoros al contrario y los omnívoros mejoran igual ambas estadísticas
     @api.model
     def find_player_by_name(self, player_name):
