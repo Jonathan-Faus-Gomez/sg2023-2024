@@ -24,7 +24,7 @@ class player(models.Model):
     edificios = fields.One2many('game.edificio', 'player', ondelete='cascade')
 
     batallas = fields.Many2many('game.batalla')
-    poder= fields.Integer(compute='_compute_poder')
+    poder = fields.Integer(compute='_compute_poder')
 
     carne = fields.Integer(default=3000)
     vegetal = fields.Integer(default=3000)
@@ -42,9 +42,7 @@ class player(models.Model):
 
             player.poder = poder_total
 
-
-
-    def update_player_resources(self):
+    def update_player_resources(self):  # cron
         for player in self.search([]):
             oro = player.oro
             carne = player.carne
@@ -175,6 +173,7 @@ class edificio(models.Model):
 
     # DEFENSA
     ataque = fields.Integer(string='Ataque', compute='_compute_ataque')
+
     @api.depends('level')
     def _compute_produccion(self):
         for record in self:
@@ -208,20 +207,16 @@ class edificio(models.Model):
             elif record.tipo == '4':
                 record.vida = 750 + record.level * 0.6
 
-
-
     @api.depends('tipo')
     def _compute_cantidad(self):
         for edificio in self:
             if edificio.tipo == '1':
                 edificio.capacidadMaxima = 100 * edificio.level
 
-
-
     @api.depends('tipo')
     def _compute_ataque(self):
         for edificio in self:
-            edificio.ataque=0
+            edificio.ataque = 0
             if edificio.tipo == '2':
                 edificio.ataque = 100 * edificio.level * 0.8
 
@@ -243,15 +238,13 @@ class batalla(models.Model):
     def _verificar_jugadores(self):
         for record in self:
             if record.player1 and record.player2 and record.player1.id == record.player2.id:
-                raise ValidationError("Un jugador no puede atacar a sí mismo")
-
-
+                raise ValidationError("Un jugador no puede atacarse a sí mismo")
 
     def calcular_batalla(self, player1, player2):
         partida = 0
-        #0 empate
-        #1 gana player1
-        #-1 gana player2
+        # 0 empate
+        # 1 gana player1
+        # -1 gana player2
 
         if player1.poder > player2.poder:
             partida = 1
@@ -267,7 +260,7 @@ class batalla(models.Model):
             player1.write({'oro': player1.oro - 3000 * player1.level})
             self.write({'ganador': player2.id})
 
-    def update_battles(self):
+    def update_battles(self):  # cron
         domain = [('finalizado', '=', False), ('progreso', '>=', 100)]
         battle_count = self.search_count(domain)
         battles = self.search(domain, limit=battle_count)
@@ -286,16 +279,13 @@ class batalla(models.Model):
     def _calcular_fin(self):
         for record in self:
             fecha_inicio = fields.Datetime.from_string(record.inicio)
-            fecha_fin = fecha_inicio + timedelta(hours=2)
-
-
+            fecha_fin = fecha_inicio + timedelta(hours=12)
 
             record.fin = fields.Datetime.to_string(fecha_fin)
-            record.tiempo_total = (fecha_fin - fecha_inicio).total_seconds() / 60 #minutos
-
+            record.tiempo_total = (fecha_fin - fecha_inicio).total_seconds() / 60  # minutos
             tiempo_pasado = (datetime.now() - fecha_inicio).total_seconds() / 60
             restante = fecha_fin - datetime.now()
-            record.tiempo_restante = "{:02}:{:02}:{:02}".format(restante.seconds // 3600, (restante.seconds // 60) % 60,
-                                                                restante.seconds % 60)
-            record.progreso = (tiempo_pasado * 100) / record.tiempo_total
 
+            record.tiempo_restante = "{:02}:{:02}:{:02}".format(restante.seconds // 3600, (restante.seconds // 60),restante.seconds % 60)
+                                        #  2 DIGITOS         HORAS->SEGUNDOS/3600 MINUTOS->SEGUNDOS/60 SEGUNDOS->SEGUNDOS%60
+            record.progreso = (tiempo_pasado * 100) / record.tiempo_total
