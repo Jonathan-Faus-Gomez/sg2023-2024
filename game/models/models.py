@@ -59,7 +59,7 @@ class dino(models.Model):
     ataque = fields.Float(compute='_compute_ataque')
     tamany = fields.Selection([('1', 'Enano'), ('2', 'Pequeño'), ('3', 'Mediano'), ('4', 'Grande'), ('5', 'Gigante')])
     ocupa = fields.Integer(compute='_compute_ocupa')
-    imagen = fields.Image(compute='_compute_imagen')
+    imagen = fields.Image("Imagen",compute='_compute_imagen',store=True)
 
 
 

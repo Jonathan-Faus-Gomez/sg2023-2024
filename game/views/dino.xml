@@ -42,19 +42,17 @@
                 <kanban>
                     <templates>
                         <t t-name="kanban-box">
+                            <div class="oe_kanban_image">
+                                <img t-att-src="'/web/image/game.dino/' + str(record.id) + '/image'"/>
+                            </div>
                             <div class="oe_kanban_title">
-                                <strong >
+                                <strong>
                                     <field name="name"/>
                                 </strong>
                             </div>
                             <div class="oe_kanban_details">
                                 <field name="level"/>
                                 <field name="tipo"/>
-                                <!--
-                                <img class="oe_kanban_image"
-                                        t-att-alt="record.name.value"
-                                        t-att-src="kanban_image('game.player', 'foto', record.id.value)" />
-                                 -->
                             </div>
                         </t>
                     </templates>
