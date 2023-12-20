@@ -1,30 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-<!--
-          <record id="object0" model="game.game">
-            <field name="name">Object 0</field>
-            <field name="value">0</field>
-          </record>
+    <!-- Datos de demostración para el primer jugador -->
+    <record id="player_demo1" model="game.player">
+        <field name="name">Antonio</field>
+        <field name="level">3</field>
+        <field name="carne">5000</field>
+        <field name="vegetal">4000</field>
+        <field name="oro">12000</field>
+        <field name="dinos" eval="[(0, 0, {'name': 'Dino1', 'level': 2, 'tipo': '1', 'tamany': '3'})]"/>
+        <field name="edificios" eval="[(0, 0, {'name': 'Almacen1', 'tipo': '1', 'level': 2})]"/>
+        <field name="batallas" eval="[(4, ref('game.batalla_demo1'))]"/>
 
-          <record id="object1" model="game.game">
-            <field name="name">Object 1</field>
-            <field name="value">10</field>
-          </record>
+    </record>
 
-          <record id="object2" model="game.game">
-            <field name="name">Object 2</field>
-            <field name="value">20</field>
-          </record>
+    <!-- Datos de demostración para el segundo jugador -->
+    <record id="player_demo2" model="game.player">
+        <field name="name">Manuel</field>
+        <field name="level">2</field>
+        <field name="carne">3000</field>
+        <field name="vegetal">2500</field>
+        <field name="oro">8000</field>
+        <field name="dinos" eval="[(0, 0, {'name': 'Dino2', 'level': 1, 'tipo': '2', 'tamany': '2'})]"/>
+        <field name="edificios" eval="[(0, 0, {'name': 'Ataque1', 'tipo': '3', 'level': 1})]"/>
+        <field name="batallas" eval="[(4, ref('game.batalla_demo2'))]"/>
+    </record>
 
-          <record id="object3" model="game.game">
-            <field name="name">Object 3</field>
-            <field name="value">30</field>
-          </record>
+    <!-- dinosaurios -->
+    <record id="dino_demo1" model="game.dino">
+        <field name="name">Raptor</field>
+        <field name="level">2</field>
+        <field name="tipo">1</field>
+        <field name="tamany">3</field>
+        <field name="player" ref="player_demo1"/>
+    </record>
 
-          <record id="object4" model="game.game">
-            <field name="name">Object 4</field>
-            <field name="value">40</field>
-          </record>
--->
+    <record id="dino_demo2" model="game.dino">
+        <field name="name">Parasaurio</field>
+        <field name="level">1</field>
+        <field name="tipo">2</field>
+        <field name="tamany">4</field>
+        <field name="player" ref="player_demo2"/>
+    </record>
+
+    <!-- edificios -->
+    <record id="edificio_demo1" model="game.edificio">
+        <field name="name">Almacen</field>
+        <field name="tipo">1</field>
+        <field name="level">2</field>
+        <field name="player" ref="player_demo1"/>
+    </record>
+
+    <record id="edificio_demo2" model="game.edificio">
+        <field name="name">Ataque</field>
+        <field name="tipo">3</field>
+        <field name="level">1</field>
+        <field name="player" ref="player_demo2"/>
+    </record>
+
+    <!-- batallas -->
+    <record id="batalla_demo1" model="game.batalla">
+        <field name="name">Batalla1</field>
+        <field name="player1" ref="player_demo1"/>
+        <field name="player2" ref="player_demo2"/>
+    </record>
     </data>
 </odoo>
