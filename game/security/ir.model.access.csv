@@ -3,3 +3,4 @@ access_game_player,game.player,model_game_player,base.group_user,1,1,1,1
 access_game_dino,game.dino,model_game_dino,base.group_user,1,1,1,1
 access_game_edificio,game.edificio,model_game_edificio,base.group_user,1,1,1,1
 access_game_batalla,game.batalla,model_game_batalla,base.group_user,1,1,1,1
+access_game_edificio_wizard,game.edificio_wizard,model_game_edificio_wizard,base.group_user,1,1,1,1

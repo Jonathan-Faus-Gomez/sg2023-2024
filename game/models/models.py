@@ -2,6 +2,7 @@
 from datetime import timedelta, datetime
 
 from dateutil.relativedelta import relativedelta
+from jsonschema.exceptions import ValidationError
 from odoo import models, fields, api
 import os
 import logging
@@ -280,3 +281,33 @@ class batalla(models.Model):
                                                                 restante.seconds % 60)
             #  2 DIGITOS:02:02         HORAS->SEGUNDOS//3600 MINUTOS->SEGUNDOS//60 % 60  SEGUNDOS->SEGUNDOS%60
             record.progreso = (tiempo_pasado * 100) / record.tiempo_total
+class edificio_wizard(models.TransientModel): # FALTA RELACION CON PLAYER
+    _name = 'game.edificio_wizard'
+
+    tipo = fields.Selection(
+        [('1', 'Almacen'), ('2', 'Defensa'), ('3', 'Ataque'), ('4', 'Produccion')],
+        required=True
+    )
+
+    tipoProduccion = fields.Selection([('1', 'Oro'), ('2', 'Carne'), ('3', 'Vegetal')],)
+
+    name = fields.Char(compute='_get_name')
+
+    @api.depends('tipo', 'tipoProduccion')
+    def _get_name(self):
+        for b in self:
+            b.name = 'desconocido'
+            if b.tipo:
+                tipo_name = dict(b._fields['tipo'].selection).get(b.tipo, 'desconocido')
+                b.name = tipo_name
+
+            if b.tipo and b.tipoProduccion:
+                tipo_prod_name = dict(b._fields['tipoProduccion'].selection).get(b.tipoProduccion, 'desconocido')
+                b.name = f"{tipo_name} {tipo_prod_name}"
+
+    def crear_edificio(self):
+        self.env['game.edificio'].create({
+            "name": self.name,
+            "tipo": self.tipo,
+            "tipoProduccion": self.tipoProduccion
+        })
