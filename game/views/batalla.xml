@@ -48,5 +48,13 @@
         </record>
 
 
+        <record id="game.launch_batalla_wizard" model="ir.actions.act_window">
+            <field name="name">Launch batalla</field>
+            <field name="res_model">game.batalla_wizard</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+
     </data>
 </odoo>

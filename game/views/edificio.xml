@@ -45,7 +45,7 @@
                         <footer>
                             <button name="crear_edificio" type="object"
                                     string="Crear edificio" class="oe_highlight"/>
-                            or
+
                             <button special="cancel" string="Cancel"/>
                         </footer>
                     </group>

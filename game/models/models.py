@@ -311,3 +311,82 @@ class edificio_wizard(models.TransientModel): # FALTA RELACION CON PLAYER
             "tipo": self.tipo,
             "tipoProduccion": self.tipoProduccion
         })
+class batalla_wizard(models.TransientModel):
+    _name = 'game.batalla_wizard'
+
+    name = fields.Char()
+    inicio = fields.Datetime(default=lambda self: fields.Datetime.now())
+    fin = fields.Datetime(compute='_calcular_fin')
+
+    def _get_jugador1(self):
+        return self._context.get('player_context')
+
+    player1 = fields.Many2one('game.player', default=_get_jugador1)
+    player2 = fields.Many2one('game.player', ondelete='set null')
+
+    state = fields.Selection([
+        ('players', "Player Selection"),
+        ('fecha', "Fecha Selection"),
+        ('name', "Name Selection"),
+    ], default='players')
+
+
+
+    @api.depends('inicio')
+    def _calcular_fin(self):
+        for record in self:
+            fecha_inicio = fields.Datetime.from_string(record.inicio)
+            fecha_fin = fecha_inicio + timedelta(hours=12)
+
+            record.fin = fields.Datetime.to_string(fecha_fin)
+
+    def crear_batalla(self):
+        min_date = fields.Datetime.from_string(fields.Datetime.now()) - timedelta(minutes=5)
+        if (self.inicio < min_date):
+            self.inicio = fields.Datetime.now()
+        self.env['game.batalla'].create({
+            "name": self.name,
+            "inicio": self.inicio,
+            "fin": self.fin,
+            "player1": self.player1,
+            "player2": self.player2
+        })
+
+    def action_previous(self):
+        if (self.state == 'fecha'):
+            self.state = 'players'
+        elif (self.state == 'name'):
+            self.state = 'fecha'
+        return {
+            'type': 'ir.actions.act_window',
+            'name': 'Launch batalla wizard',
+            'res_model': self._name,
+            'view_mode': 'form',
+            'target': 'new',
+            'res_id': self.id,
+            'context': self._context
+        }
+
+    def action_next(self):
+        if (self.state == 'players'):
+            self.state = 'fecha'
+        elif (self.state == 'fecha'):
+            self.state = 'name'
+        return {
+            'type': 'ir.actions.act_window',
+            'name': 'Launch batalla wizard',
+            'res_model': self._name,
+            'view_mode': 'form',
+            'target': 'new',
+            'res_id': self.id,
+            'context': self._context
+        }
+
+    @api.onchange('inicio')
+    def _onchange_start(self):
+        min_date = fields.Datetime.from_string(fields.Datetime.now()) - timedelta(minutes=5)
+        if (self.inicio < min_date):
+            self.inicio = fields.Datetime.now()
+            return {
+                'warning': {'title': "Warning", 'message': "La fecha introducida no es válida", 'type': 'notification'},
+            }

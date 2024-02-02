@@ -33,6 +33,8 @@ vesprada
                             <field name="oro"/>
                             <field name="carne"/>
                             <field name="vegetal"/>
+                            <button name="%(game.launch_batalla_wizard)d" type="action"
+                                    string="Crear batalla" class="oe_highlight" context="{'player_context':active_id}"/>
                         </group>
                     </sheet>
                 </form>
