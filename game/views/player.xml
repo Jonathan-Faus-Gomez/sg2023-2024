@@ -4,7 +4,7 @@
 
         <record model="ir.ui.view" id="game_player_tree_view">
             <field name="name">game.player.tree</field>
-            <field name="model">game.player</field>
+            <field name="model">res.partner</field>
             <field name="arch" type="xml">
                 <tree string="Jugadores">
                     <field name="name"/>
@@ -21,7 +21,7 @@
 
         <record model="ir.ui.view" id="game_player_form_view">
             <field name="name">game.player.form</field>
-            <field name="model">game.player</field>
+            <field name="model">res.partner</field>
             <field name="arch" type="xml">
                 <form string="Jugador">
                     <sheet>

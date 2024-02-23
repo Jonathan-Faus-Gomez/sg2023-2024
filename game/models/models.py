@@ -16,7 +16,8 @@ _logger = logging.getLogger(__name__)
 # probar demo
 # valores por defecto general
 class player(models.Model):
-    _name = 'game.player'
+    _name = 'res.partner'
+    _inherit = 'res.partner'
     _description = 'Jugador'
 
     name = fields.Char(required=True)

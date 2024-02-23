@@ -19,8 +19,12 @@
 
     <record model="ir.actions.act_window" id="game.action_player">
       <field name="name">Player window</field>
-      <field name="res_model">game.player</field>
+      <field name="res_model">res.partner</field>
       <field name="view_mode">tree,form</field>
+        <field name="view_ids" eval="[(5, 0, 0),
+      (0, 0, {'view_mode': 'tree', 'view_id': ref('game.player.tree')}),
+      (0, 0, {'view_mode': 'form', 'view_id': ref('game.player.form')})
+      ]" />
     </record>
     <record model="ir.actions.act_window" id="game.action_dino">
       <field name="name">Dino window</field>
