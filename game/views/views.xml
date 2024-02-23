@@ -25,6 +25,7 @@
                                   (0, 0, {'view_mode': 'tree', 'view_id': ref('game.game_player_tree')}),
                                   (0, 0, {'view_mode': 'form', 'view_id': ref('game.game_player_form')})
                                  ]" />
+    </record>
     <record model="ir.actions.act_window" id="game.action_dino">
       <field name="name">Dino window</field>
       <field name="res_model">game.dino</field>
