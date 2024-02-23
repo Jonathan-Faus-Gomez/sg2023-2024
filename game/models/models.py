@@ -67,16 +67,15 @@ class player(models.Model):
     @api.constrains('dinos')
     def _calcular_espacio(self):
         for record in self:
-            sum_tamany = sum(record.dinos.mapped('tamany'))
-            for edificio in player.edificios:
-                sum_capacidad = sum(edificio.mapped('capacidadMaxima'))
-                if sum_tamany > sum_capacidad:
-                    raise ValidationError("No caben más dinos en el campamento")
+            sum_tamany = sum(int(tamany) for tamany in record.dinos.mapped('tamany'))
+            sum_capacidad = sum(edificio.capacidadMaxima for edificio in record.edificios)
+            # if sum_tamany > sum_capacidad:
+            # raise ValidationError("No caben más dinos en el campamento")
 
     @api.onchange('name')
     def _onchange_name(self):
         # Verifico si algun player ya tiene ese nombre
-        existing_player = self.env['res.par'].search([('name', '=', self.name)])
+        existing_player = self.env['res.partner'].search([('name', '=', self.name)])
         if existing_player:
             self.name = ''
             return {'warning': {'title': 'Nombre usado', 'message': 'Ese nombre ya está en uso por otro jugador'}}
@@ -209,11 +208,13 @@ class edificio(models.Model):
             elif record.tipo == '4':
                 record.vida = 750 + record.level * 0.6
 
-    @api.depends('tipo')
+    @api.depends('tipo', 'level')
     def _compute_cantidad(self):
         for edificio in self:
             if edificio.tipo == '1':
                 edificio.capacidadMaxima = 100 * edificio.level
+            else:
+                edificio.capacidadMaxima = 0  # Capacidad máxima de 0 para todos los demás tipos de edificios
 
     @api.depends('tipo')
     def _compute_ataque(self):
@@ -267,6 +268,7 @@ class batalla(models.Model):
             if not record.finalizado and record.progreso >= 100:
                 record.calcular_batalla(record.player1, record.player2)
                 record.write({'progreso': 100.00})
+
     @api.depends('inicio')
     def _calcular_fin(self):
         for record in self:
@@ -275,14 +277,16 @@ class batalla(models.Model):
 
             record.fin = fields.Datetime.to_string(fecha_fin)
             record.tiempo_total = (fecha_fin - fecha_inicio).total_seconds() / 60  # minutos
-            tiempo_pasado = (datetime.now() - fecha_inicio).total_seconds() / 60
-            restante = fecha_fin - datetime.now()
+            tiempo_pasado = (fields.Datetime.now() - fecha_inicio).total_seconds() / 60
+            restante = fecha_fin - fields.Datetime.now()
 
             record.tiempo_restante = "{:02}:{:02}:{:02}".format(restante.seconds // 3600, (restante.seconds // 60) % 60,
                                                                 restante.seconds % 60)
             #  2 DIGITOS:02:02         HORAS->SEGUNDOS//3600 MINUTOS->SEGUNDOS//60 % 60  SEGUNDOS->SEGUNDOS%60
             record.progreso = (tiempo_pasado * 100) / record.tiempo_total
-class edificio_wizard(models.TransientModel): # FALTA RELACION CON PLAYER
+
+
+class edificio_wizard(models.TransientModel):  # FALTA RELACION CON PLAYER
     _name = 'game.edificio_wizard'
 
     tipo = fields.Selection(
@@ -290,7 +294,7 @@ class edificio_wizard(models.TransientModel): # FALTA RELACION CON PLAYER
         required=True
     )
 
-    tipoProduccion = fields.Selection([('1', 'Oro'), ('2', 'Carne'), ('3', 'Vegetal')],)
+    tipoProduccion = fields.Selection([('1', 'Oro'), ('2', 'Carne'), ('3', 'Vegetal')], )
 
     name = fields.Char(compute='_get_name')
 
@@ -312,6 +316,8 @@ class edificio_wizard(models.TransientModel): # FALTA RELACION CON PLAYER
             "tipo": self.tipo,
             "tipoProduccion": self.tipoProduccion
         })
+
+
 class batalla_wizard(models.TransientModel):
     _name = 'game.batalla_wizard'
 
@@ -319,10 +325,7 @@ class batalla_wizard(models.TransientModel):
     inicio = fields.Datetime(default=lambda self: fields.Datetime.now())
     fin = fields.Datetime(compute='_calcular_fin')
 
-    def _get_jugador1(self):
-        return self._context.get('player_context')
-
-    player1 = fields.Many2one('res.partner', default=_get_jugador1)
+    player1 = fields.Many2one('res.partner', default=lambda self: self._context.get('player_context'))
     player2 = fields.Many2one('res.partner', ondelete='set null')
 
     state = fields.Selection([
@@ -330,8 +333,6 @@ class batalla_wizard(models.TransientModel):
         ('fecha', "Fecha Selection"),
         ('name', "Name Selection"),
     ], default='players')
-
-
 
     @api.depends('inicio')
     def _calcular_fin(self):
@@ -349,45 +350,10 @@ class batalla_wizard(models.TransientModel):
             "name": self.name,
             "inicio": self.inicio,
             "fin": self.fin,
-            "player1": self.player1,
-            "player2": self.player2
+            "player1": self.player1.id,  # Cambiado a ID
+            "player2": self.player2.id  # Cambiado a ID
         })
 
     def action_previous(self):
         if (self.state == 'fecha'):
             self.state = 'players'
-        elif (self.state == 'name'):
-            self.state = 'fecha'
-        return {
-            'type': 'ir.actions.act_window',
-            'name': 'Launch batalla wizard',
-            'res_model': self._name,
-            'view_mode': 'form',
-            'target': 'new',
-            'res_id': self.id,
-            'context': self._context
-        }
-
-    def action_next(self):
-        if (self.state == 'players'):
-            self.state = 'fecha'
-        elif (self.state == 'fecha'):
-            self.state = 'name'
-        return {
-            'type': 'ir.actions.act_window',
-            'name': 'Launch batalla wizard',
-            'res_model': self._name,
-            'view_mode': 'form',
-            'target': 'new',
-            'res_id': self.id,
-            'context': self._context
-        }
-
-    @api.onchange('inicio')
-    def _onchange_start(self):
-        min_date = fields.Datetime.from_string(fields.Datetime.now()) - timedelta(minutes=5)
-        if (self.inicio < min_date):
-            self.inicio = fields.Datetime.now()
-            return {
-                'warning': {'title': "Warning", 'message': "La fecha introducida no es válida", 'type': 'notification'},
-            }
