@@ -2,7 +2,7 @@
     <data>
 
 
-        <record model="ir.ui.view" id="game_player_tree">
+        <record model="ir.ui.view" id="game.player_tree">
             <field name="name">game.player.tree</field>
             <field name="model">res.partner</field>
             <field name="arch" type="xml">
@@ -19,7 +19,7 @@
         </record>
 
 
-        <record model="ir.ui.view" id="game_player_form">
+        <record model="ir.ui.view" id="game.player_form">
             <field name="name">game.player.form</field>
             <field name="model">res.partner</field>
             <field name="arch" type="xml">

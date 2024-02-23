@@ -22,8 +22,8 @@
     <field name="res_model">res.partner</field>
     <field name="view_mode">tree,form</field>
     <field name="view_ids" eval="[(5, 0, 0),
-                                  (0, 0, {'view_mode': 'tree', 'view_id': ref('game.game_player_tree')}),
-                                  (0, 0, {'view_mode': 'form', 'view_id': ref('game.game_player_form')})
+                                  (0, 0, {'view_mode': 'tree', 'view_id': ref('game.player_tree')}),
+                                  (0, 0, {'view_mode': 'form', 'view_id': ref('game.player_form')})
                                  ]" />
     </record>
     <record model="ir.actions.act_window" id="game.action_dino">
