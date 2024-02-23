@@ -76,7 +76,7 @@ class player(models.Model):
     @api.onchange('name')
     def _onchange_name(self):
         # Verifico si algun player ya tiene ese nombre
-        existing_player = self.env['game.player'].search([('name', '=', self.name)])
+        existing_player = self.env['res.par'].search([('name', '=', self.name)])
         if existing_player:
             self.name = ''
             return {'warning': {'title': 'Nombre usado', 'message': 'Ese nombre ya está en uso por otro jugador'}}
@@ -93,7 +93,7 @@ class dino(models.Model):
     name = fields.Char()
     level = fields.Integer(default=1)
     tipo = fields.Selection([('1', 'Carnivoro'), ('2', 'Herbivoro'), ('3', 'Omnivoro')])
-    player = fields.Many2one('game.player')
+    player = fields.Many2one('res.partner')
     vida = fields.Float(compute='_compute_vida')
     ataque = fields.Float(compute='_compute_ataque')
     tamany = fields.Selection([('1', 'Enano'), ('2', 'Pequeño'), ('3', 'Mediano'), ('4', 'Grande'), ('5', 'Gigante')])
@@ -163,7 +163,7 @@ class edificio(models.Model):
     tipo = fields.Selection([('1', 'Almacen'), ('2', 'Defensa'), ('3', 'Ataque'), ('4', 'Produccion')])
     tipoProduccion = fields.Selection([('1', 'Oro'), ('2', 'Carne'), ('3', 'Vegetal')])
     level = fields.Integer(default=1)
-    player = fields.Many2one('game.player')
+    player = fields.Many2one('res.partner')
     vida = fields.Integer(compute='_compute_vida')
 
     produccionOro = fields.Float(compute='_compute_produccionOro')
@@ -233,8 +233,8 @@ class batalla(models.Model):
     tiempo_total = fields.Integer(compute='_calcular_fin')
     tiempo_restante = fields.Char(compute='_calcular_fin')
     progreso = fields.Float(compute='_calcular_fin')
-    player1 = fields.Many2one('game.player', ondelete='set null')
-    player2 = fields.Many2one('game.player', ondelete='set null')
+    player1 = fields.Many2one('res.partner', ondelete='set null')
+    player2 = fields.Many2one('res.partner', ondelete='set null')
     finalizado = fields.Boolean(default=False)
 
     @api.constrains('player1', 'player2')
@@ -322,8 +322,8 @@ class batalla_wizard(models.TransientModel):
     def _get_jugador1(self):
         return self._context.get('player_context')
 
-    player1 = fields.Many2one('game.player', default=_get_jugador1)
-    player2 = fields.Many2one('game.player', ondelete='set null')
+    player1 = fields.Many2one('res.partner', default=_get_jugador1)
+    player2 = fields.Many2one('res.partner', ondelete='set null')
 
     state = fields.Selection([
         ('players', "Player Selection"),
