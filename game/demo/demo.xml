@@ -1,7 +1,7 @@
 <odoo>
     <data>
 
-        <record id="player_demo1" model="game.player">
+        <record id="player_demo1" model="res.partner">
             <field name="name">Antonio</field>
             <field name="level">3</field>
             <field name="carne">5000</field>
@@ -11,7 +11,7 @@
             <field name="edificios" eval="[(0, 0, {'name': 'Almacen', 'tipo': '1', 'level': 2})]"/>
         </record>
 
-        <record id="player_demo2" model="game.player">
+        <record id="player_demo2" model="res.partner">
             <field name="name">María</field>
             <field name="level">2</field>
             <field name="carne">3000</field>
