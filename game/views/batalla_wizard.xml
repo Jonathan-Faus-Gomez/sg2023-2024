@@ -18,7 +18,6 @@
                                 string="Next"
                                 states="players,fecha"
                                 class="oe_highlight"
-                        context="{'wizard_available_units': available_units}"
                         />
                         <button name="action_next" type="object"
                                 string="Next"
@@ -41,9 +40,9 @@
                         </group>
                     </sheet>
                     <footer>
-                        <button states="name" name="create_batalla" type="object"
+                        <button states="name" name="crear_batalla" type="object"
                                 string="Crear Batalla" class="oe_highlight"/>
-                        <button states="players,fecha" name="create_batalla" type="object"
+                        <button states="players,fecha" name="crear_batalla" type="object"
                                 string="Crear Batalla" class="oe_highlight disabled"/>
                         <button special="cancel" string="Cancel"/>
                     </footer>
