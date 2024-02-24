@@ -2,6 +2,15 @@
   <data>
 
     <!-- actions opening views on models -->
+  <record model="ir.ui.view" id="game.players_search_view">
+      <field name="name">Player search</field>
+      <field name="model">res.partner</field>
+      <field name="arch" type="xml">
+          <search>
+              <filter name="is_player_filter" string="Is Player" domain="[('is_player','=',True)]"/>
+          </search>
+      </field>
+    </record>
 
       <record model="ir.actions.act_window" id="game.action_player">
     <field name="name">Player window</field>
@@ -29,26 +38,12 @@
     <field name="name">Batallas window</field>
     <field name="res_model">game.batalla</field>
     <field name="view_mode">tree,form,calendar</field>
-</record>
+  </record>
+  <xpath expr="//field[@name='vat']" position="after">
+      <field name="is_player"/>
+  </xpath>
 
 
-
-
-    <!-- server action to the one above -->
-<!--
-    <record model="ir.actions.server" id="game.action_server">
-      <field name="name">game server</field>
-      <field name="model_id" ref="model_game_game"/>
-      <field name="state">code</field>
-      <field name="code">
-        action = {
-          "type": "ir.actions.act_window",
-          "view_mode": "tree,form",
-          "res_model": model._name,
-        }
-      </field>
-    </record>
--->
 
     <!-- Top menu item -->
 
