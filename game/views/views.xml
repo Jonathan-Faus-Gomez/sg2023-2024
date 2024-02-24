@@ -17,41 +17,33 @@
 
     <!-- actions opening views on models -->
 
-      <record model="ir.actions.act_window" id="game.action_player">
-    <field name="name">Player window</field>
-    <field name="res_model">res.partner</field>
-    <field name="view_mode">tree,form</field>
-    <field name="domain"></field>
-      <field name="context">{'default_is_player': True, 'search_default_is_player_filter': 1}</field>
-      <field name="search_view_id" ref="game.players_search_view"/>
-      <field name="view_ids" eval="[(5, 0, 0),
-            (0, 0, {'view_mode': 'tree', 'view_id': ref('game.player_tree')}),
-            (0, 0, {'view_mode': 'form', 'view_id': ref('game.player_form')}),]"/>
-    </record>
+
 
 
     <record model="ir.ui.view" id="game.player_partners_form_view_inherit">
-      <field name="name">Players form inherit</field>
+      <field name="name">Players inherit</field>
       <field name="model">res.partner</field>
       <field name="inherit_id" ref="base.view_partner_form"/>
       <field name="arch" type="xml">
-
-        <xpath expr="//field[@name='vat']" position="after">
-          <field name="is_player"/>
-        </xpath>
-
         <notebook position="inside">
           <page string="Player">
             <group>
               <field name="name"/>
-              <field name="building"/>
-              <field name="militia"/>
             </group>
           </page>
         </notebook>
       </field>
     </record>
 
+
+    <record model="ir.actions.act_window" id="game.action_player">
+        <field name="name">Player window</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('game.player_tree')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('game.player_form')}),]"/>
+    </record>
 
     <record model="ir.actions.act_window" id="game.action_dino">
       <field name="name">Dino window</field>

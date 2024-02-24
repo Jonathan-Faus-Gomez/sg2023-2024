@@ -20,7 +20,7 @@ class player(models.Model):
     _inherit = 'res.partner'
     _description = 'Jugador'
 
-    is_player = fields.Boolean(default=False)
+
     name = fields.Char(required=True)
     level = fields.Integer(default=1)
     dinos = fields.One2many('game.dino', 'player', domain=[('level', '>', 1)])
