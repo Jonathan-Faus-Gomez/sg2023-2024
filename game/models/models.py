@@ -330,10 +330,10 @@ class batalla_wizard(models.TransientModel):
     player2 = fields.Many2one('res.partner', ondelete='set null')
 
     state = fields.Selection([
-        ('players', "Player Selection"),
         ('fecha', "Fecha Selection"),
+        ('players', "Players Selection"),
         ('name', "Name Selection"),
-    ], default='players')
+    ], default='fecha')
 
     @api.depends('inicio')
     def _calcular_fin(self):
@@ -379,16 +379,16 @@ class batalla_wizard(models.TransientModel):
                     }
                 }
             else:
-                self.state = 'fecha'
+                self.state = 'name'
         elif self.state == 'fecha':
-            self.state = 'name'
+            self.state = 'players'
         return self._reload_wizard()
 
     def action_previous(self):
-        if self.state == 'fecha':
-            self.state = 'players'
-        elif self.state == 'name':
+        if self.state == 'players':
             self.state = 'fecha'
+        elif self.state == 'name':
+            self.state = 'players'
         return self._reload_wizard()
 
     def _reload_wizard(self):
