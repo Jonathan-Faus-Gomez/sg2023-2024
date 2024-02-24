@@ -1,57 +1,43 @@
 <odoo>
-    <data>
+  <data>
 
-
-        <record model="ir.ui.view" id="game.player_tree">
-        <field name="name">game.player.tree</field>
-        <field name="model">res.partner</field>
-        <field name="arch" type="xml">
-            <tree string="Jugadores">
-                <field name="name"/>
-                <field name="is_player"/>
-                <field name="level"/>
-                <field name="dinos"/>
-                <field name="edificios"/>
-                <field name="oro"/>
-                <field name="carne"/>
-                <field name="vegetal"/>
-            </tree>
-        </field>
-    </record>
-
-    <record model="ir.ui.view" id="game.player_form">
-        <field name="name">game.player.form</field>
-        <field name="model">res.partner</field>
-        <field name="arch" type="xml">
-            <form string="Jugador">
-                <sheet>
-                    <group>
-                        <field name="name"/>
-                        <field name="edificios"/>
-                        <field name="dinos"/>
-                        <field name="oro"/>
-                        <field name="carne"/>
-                        <field name="vegetal"/>
-                        <button name="%(game.launch_batalla_wizard)d" type="action"
-                                string="Crear batalla" class="oe_highlight" context="{'player_context':active_id}"/>
-                    </group>
-                </sheet>
-            </form>
-        </field>
-    </record>
-
-    <record model="ir.ui.view" id="game.players_search_view">
-      <field name="name">Player search</field>
+    <record model="ir.ui.view" id="game.player_tree">
+      <field name="name">game.player.tree</field>
       <field name="model">res.partner</field>
       <field name="arch" type="xml">
-          <search>
-              <filter name="is_player_filter" string="Is Player" domain="[('is_player','=',True)]"/>
-          </search>
+          <tree string="Jugadores">
+              <field name="name"/>
+              <field name="is_player"/>
+              <field name="level"/>
+              <field name="dinos"/>
+              <field name="edificios"/>
+              <field name="oro"/>
+              <field name="carne"/>
+              <field name="vegetal"/>
+          </tree>
       </field>
     </record>
 
+    <record model="ir.ui.view" id="game.player_form">
+      <field name="name">game.player.form</field>
+      <field name="model">res.partner</field>
+      <field name="arch" type="xml">
+          <form string="Jugador">
+              <sheet>
+                  <group>
+                      <field name="name"/>
+                      <field name="edificios"/>
+                      <field name="dinos"/>
+                      <field name="oro"/>
+                      <field name="carne"/>
+                      <field name="vegetal"/>
+                      <button name="%(game.launch_batalla_wizard)d" type="action"
+                              string="Crear batalla" class="oe_highlight" context="{'player_context':active_id}"/>
+                  </group>
+              </sheet>
+          </form>
+      </field>
+    </record>
 
-
-
-    </data>
+  </data>
 </odoo>

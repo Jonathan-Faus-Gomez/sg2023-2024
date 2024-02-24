@@ -2,7 +2,8 @@
   <data>
 
     <!-- actions opening views on models -->
-  <record model="ir.ui.view" id="game.players_search_view">
+
+    <record model="ir.ui.view" id="game.players_search_view">
       <field name="name">Player search</field>
       <field name="model">res.partner</field>
       <field name="arch" type="xml">
@@ -12,15 +13,16 @@
       </field>
     </record>
 
-      <record model="ir.actions.act_window" id="game.action_player">
-    <field name="name">Player window</field>
-    <field name="res_model">res.partner</field>
-    <field name="view_mode">tree,form</field>
-    <field name="context">{'default_is_player': True, 'search_default_is_player_filter': 1}</field><field name="search_view_id" ref="game.players_search_view"/>
-    <field name="view_ids" eval="[(5, 0, 0),
-                                  (0, 0, {'view_mode': 'tree', 'view_id': ref('game.player_tree')}),
-                                  (0, 0, {'view_mode': 'form', 'view_id': ref('game.player_form')})
-                                 ]" />
+    <record model="ir.actions.act_window" id="game.action_player">
+      <field name="name">Player window</field>
+      <field name="res_model">res.partner</field>
+      <field name="view_mode">tree,form</field>
+      <field name="context">{'default_is_player': True, 'search_default_is_player_filter': 1}</field>
+      <field name="search_view_id" ref="game.players_search_view"/>
+      <field name="view_ids" eval="[(5, 0, 0),
+                                    (0, 0, {'view_mode': 'tree', 'view_id': ref('game.player_tree')}),
+                                    (0, 0, {'view_mode': 'form', 'view_id': ref('game.player_form')})
+                                   ]" />
     </record>
 
     <record model="ir.actions.act_window" id="game.action_dino">
@@ -34,27 +36,23 @@
       <field name="view_mode">tree,form</field>
     </record>
 
-  <record model="ir.actions.act_window" id="game.action_batalla">
-    <field name="name">Batallas window</field>
-    <field name="res_model">game.batalla</field>
-    <field name="view_mode">tree,form,calendar</field>
-  </record>
-  <xpath expr="//field[@name='vat']" position="after">
-      <field name="is_player"/>
-  </xpath>
+    <record model="ir.actions.act_window" id="game.action_batalla">
+      <field name="name">Batallas window</field>
+      <field name="res_model">game.batalla</field>
+      <field name="view_mode">tree,form,calendar</field>
+    </record>
 
-
+    <xpath expr="//field[@name='vat']" position="after">
+        <field name="is_player"/>
+    </xpath>
 
     <!-- Top menu item -->
-
     <menuitem name="game" id="game.menu_root"/>
 
     <!-- menu categories -->
-
     <menuitem name="Menu 1" id="game.menu_1" parent="game.menu_root"/>
 
     <!-- actions -->
-
     <menuitem name="Player" id="game.menu_1_player" parent="game.menu_1"
               action="game.action_player"/>
     <menuitem name="Dino" id="game.menu_1_dino" parent="game.menu_1"
@@ -63,5 +61,6 @@
               action="game.action_edificio"/>
     <menuitem name="Batalla" id="game.menu_1_batalla" parent="game.menu_1"
               action="game.action_batalla"/>
+
   </data>
 </odoo>
