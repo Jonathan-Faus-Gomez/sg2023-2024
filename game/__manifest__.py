@@ -31,6 +31,7 @@
         'views/player.xml',
         'views/dino.xml',
         'views/edificio.xml',
+        'views/batalla_wizard.xml',
         'cron/cron.xml',
         'demo/demo.xml'
     ],

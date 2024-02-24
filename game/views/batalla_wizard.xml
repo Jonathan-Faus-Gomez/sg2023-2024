@@ -1,0 +1,55 @@
+<odoo>
+    <data>
+        <!-- Vista para la selección de jugadores -->
+        <record id="view_batalla_wizard_form_players" model="ir.ui.view">
+            <field name="name">game.batalla_wizard.form.players</field>
+            <field name="model">game.batalla_wizard</field>
+            <field name="arch" type="xml">
+                <form string="Wizard Form" version="7.0">
+                    <group>
+                        <field name="player1"/>
+                        <field name="player2"/>
+                    </group>
+                    <footer>
+                        <button name="action_next" string="Next" type="object" class="oe_highlight"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+        
+        <!-- Vista para la selección de fecha -->
+        <record id="view_batalla_wizard_form_fecha" model="ir.ui.view">
+            <field name="name">game.batalla_wizard.form.fecha</field>
+            <field name="model">game.batalla_wizard</field>
+            <field name="arch" type="xml">
+                <form string="Wizard Form" version="7.0">
+                    <group>
+                        <field name="inicio"/>
+                    </group>
+                    <footer>
+                        <button name="action_previous" string="Previous" type="object" class="oe_highlight"/>
+                        <button name="action_next" string="Next" type="object" class="oe_highlight"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <!-- Vista para la selección de nombre -->
+        <record id="view_batalla_wizard_form_name" model="ir.ui.view">
+            <field name="name">game.batalla_wizard.form.name</field>
+            <field name="model">game.batalla_wizard</field>
+            <field name="arch" type="xml">
+                <form string="Wizard Form" version="7.0">
+                    <group>
+                        <field name="name"/>
+                    </group>
+                    <footer>
+                        <button name="action_previous" string="Previous" type="object" class="oe_highlight"/>
+                        <button name="crear_batalla" string="Create Battle" type="object" class="oe_highlight"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+    </data>
+</odoo>
