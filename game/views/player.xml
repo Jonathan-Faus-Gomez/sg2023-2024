@@ -1,15 +1,6 @@
 <odoo>
   <data>
 
-    <record model="ir.ui.view" id="game.players_search_view">
-      <field name="name">Player Game search</field>
-      <field name="model">res.partner</field>
-      <field name="arch" type="xml">
-          <search>
-              <filter name="is_player_filter" string="Is Player" domain="[('is_player','=',True)]"/>
-          </search>
-      </field>
-    </record>
 
     <record model="ir.ui.view" id="game.player_tree">
       <field name="name">game.player.tree</field>
