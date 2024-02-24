@@ -1,8 +1,8 @@
 <odoo>
     <data>
-        <record model="ir.ui.view" id="game.battle_wizard_view">
+        <record model="ir.ui.view" id="game.batalla_wizard_view">
             <field name="name">Batalla wizard</field>
-            <field name="model">game.battle_wizard</field>
+            <field name="model">game.batalla_wizard</field>
             <field name="arch" type="xml">
                 <form>
                     <header>
@@ -41,9 +41,9 @@
                         </group>
                     </sheet>
                     <footer>
-                        <button states="name" name="create_battle" type="object"
+                        <button states="name" name="create_batalla" type="object"
                                 string="Crear Batalla" class="oe_highlight"/>
-                        <button states="players,fecha" name="create_battle" type="object"
+                        <button states="players,fecha" name="create_batalla" type="object"
                                 string="Crear Batalla" class="oe_highlight disabled"/>
                         <button special="cancel" string="Cancel"/>
                     </footer>
