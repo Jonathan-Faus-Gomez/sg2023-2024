@@ -338,56 +338,61 @@ class batalla_wizard(models.TransientModel):
     @api.depends('inicio')
     def _calcular_fin(self):
         for record in self:
-            fecha_inicio = fields.Datetime.from_string(record.inicio)
-            fecha_fin = fecha_inicio + timedelta(hours=12)
-
-            record.fin = fields.Datetime.to_string(fecha_fin)
+            if record.inicio:
+                fecha_inicio = fields.Datetime.from_string(record.inicio)
+                fecha_fin = fecha_inicio + timedelta(hours=12)
+                record.fin = fields.Datetime.to_string(fecha_fin)
 
     def crear_batalla(self):
-        min_date = fields.Datetime.from_string(fields.Datetime.now()) - timedelta(minutes=5)
-        if (self.inicio < min_date):
+        if not self.inicio or not self.player1 or not self.player2:
+            return {
+                'type': 'ir.actions.client',
+                'tag': 'display_notification',
+                'params': {
+                    'message': 'Por favor completa todos los campos requeridos',
+                    'type': 'warning',
+                    'sticky': False,
+                }
+            }
+
+        if self.inicio < fields.Datetime.now():
             self.inicio = fields.Datetime.now()
+
         self.env['game.batalla'].create({
             "name": self.name,
             "inicio": self.inicio,
             "fin": self.fin,
-            "player1": self.player1.id,  # Cambiado a ID
-            "player2": self.player2.id  # Cambiado a ID
+            "player1": self.player1.id,
+            "player2": self.player2.id
         })
 
     def action_next(self):
-        if (self.state == 'players'):
-            if (len(self.player2) > 0):
-                self.state = 'fecha'
-            else:
+        if self.state == 'players':
+            if not self.player2:
                 return {
                     'type': 'ir.actions.client',
                     'tag': 'display_notification',
                     'params': {
-                        'message': 'No has seleccionado el segundo jugador',
+                        'message': 'Por favor selecciona el segundo jugador',
                         'type': 'info',
                         'sticky': False,
                     }
                 }
-        elif (self.state == 'fecha'):
-                self.state = 'name'
-        return {
-            'type': 'ir.actions.act_window',
-            'name': 'Launch batalla wizard',
-            'res_model': self._name,
-            'view_mode': 'form',
-            'target': 'new',
-            'res_id': self.id,
-            'context': self._context
-        }
-
+            else:
+                self.state = 'fecha'
+        elif self.state == 'fecha':
+            self.state = 'name'
+        return self._reload_wizard()
 
     def action_previous(self):
-        if(self.state == 'fecha'):
+        if self.state == 'fecha':
             self.state = 'players'
-        elif(self.state == 'name'):
+        elif self.state == 'name':
             self.state = 'fecha'
-        return{
+        return self._reload_wizard()
+
+    def _reload_wizard(self):
+        return {
             'type': 'ir.actions.act_window',
             'name': 'Launch batalla wizard',
             'res_model': self._name,
