@@ -16,7 +16,7 @@
         <!-- Cron para actualizar los recursos -->
         <record model="ir.cron" forcecreate="True" id="game_cron_update_resources">
             <field name="name">Game: Cron Actualizar Recursos del jugador</field>
-            <field name="model_id" ref="model_game_player"/>
+            <field name="model_id" ref="model_res_partner"/>
             <field name="state">code</field>
             <field name="code">model.update_player_resources()</field>
             <field name="user_id" ref="base.user_root"/>
