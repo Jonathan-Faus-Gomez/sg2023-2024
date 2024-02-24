@@ -1,22 +1,18 @@
 <odoo>
   <data>
-    <!-- explicit list view definition -->
-<!--
-    <record model="ir.ui.view" id="game.list">
-      <field name="name">game list</field>
-      <field name="model">game.game</field>
-      <field name="arch" type="xml">
-        <tree>
-          <field name="name"/>
-          <field name="value"/>
-          <field name="value2"/>
-        </tree>
-      </field>
-    </record>
--->
 
     <!-- actions opening views on models -->
 
+      <record model="ir.actions.act_window" id="game.action_player">
+    <field name="name">Player window</field>
+    <field name="res_model">res.partner</field>
+    <field name="view_mode">tree,form</field>
+    <field name="context">{'default_is_player': True, 'search_default_is_player_filter': 1}</field><field name="search_view_id" ref="game.players_search_view"/>
+    <field name="view_ids" eval="[(5, 0, 0),
+                                  (0, 0, {'view_mode': 'tree', 'view_id': ref('game.player_tree')}),
+                                  (0, 0, {'view_mode': 'form', 'view_id': ref('game.player_form')})
+                                 ]" />
+    </record>
 
     <record model="ir.actions.act_window" id="game.action_dino">
       <field name="name">Dino window</field>
