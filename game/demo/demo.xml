@@ -23,7 +23,7 @@
 
         <record id="batalla_demo1" model="game.batalla">
             <field name="name">BatallaDemo1</field>
-            <field name="inicio" eval="(datetime.datetime.now() - timedelta(days=1)).strftime(DEFAULT_SERVER_DATETIME_FORMAT)"/>
+            <!-- <field name="inicio" eval="(datetime.datetime.now() - timedelta(days=1)).strftime(DEFAULT_SERVER_DATETIME_FORMAT)"/> -->
             <field name="player1" ref="player_demo1"/>
             <field name="player2" ref="player_demo2"/>
         </record>
