@@ -1,52 +1,53 @@
 <odoo>
     <data>
-        <!-- Vista para la selección de jugadores -->
-        <record id="view_batalla_wizard_form_players" model="ir.ui.view">
-            <field name="name">game.batalla_wizard.form.players</field>
-            <field name="model">game.batalla_wizard</field>
+        <record model="ir.ui.view" id="roma.battle_wizard_view">
+            <field name="name">Roma battle wizard</field>
+            <field name="model">roma.battle_wizard</field>
             <field name="arch" type="xml">
-                <form string="Wizard Form (Players)" version="7.0">
-                    <group>
-                        <field name="player1"/>
-                        <field name="player2"/>
-                    </group>
-                    <footer>
-                        <button name="action_next" string="Next" type="object" class="oe_highlight"/>
-                    </footer>
-                </form>
-            </field>
-        </record>
+                <form>
+                    <header>
+                        <field name="state" widget="statusbar"/>
+                        <button name="action_previous" type="object"
+                                string="Previous" states="fecha,name"
+                        />
+                        <button name="action_previous" type="object"
+                                string="Previous" states="players"
+                                 class="oe_highlight disabled"
+                        />
+                        <button name="action_next" type="object"
+                                string="Next"
+                                states="players,fecha"
+                                class="oe_highlight"
+                        context="{'wizard_available_units': available_units}"
+                        />
+                        <button name="action_next" type="object"
+                                string="Next"
+                                states="name"
+                                class="oe_highlight  disabled"/>
 
-        <!-- Vista para la selección de fecha -->
-        <record id="view_batalla_wizard_form_fecha" model="ir.ui.view">
-            <field name="name">game.batalla_wizard.form.fecha</field>
-            <field name="model">game.batalla_wizard</field>
-            <field name="arch" type="xml">
-                <form string="Wizard Form (Fecha)" version="7.0">
-                    <group>
-                        <field name="inicio"/>
-                    </group>
-                    <footer>
-                        <button name="action_previous" string="Previous" type="object" class="oe_highlight"/>
-                        <button name="action_next" string="Next" type="object" class="oe_highlight"/>
-                    </footer>
-                </form>
-            </field>
-        </record>
+                    </header>
+                    <sheet>
+                        <group states="players">
+                            <field name="player1" />
+                            <field name="player2"/>
+                        </group>
+                        <group states="fecha">
+                            <field name="inicio"/>
 
-        <!-- Vista para la selección de nombre -->
-        <record id="view_batalla_wizard_form_name" model="ir.ui.view">
-            <field name="name">game.batalla_wizard.form.name</field>
-            <field name="model">game.batalla_wizard</field>
-            <field name="arch" type="xml">
-                <form string="Wizard Form (Name)" version="7.0">
-                    <group>
-                        <field name="name"/>
-                    </group>
+
+                        </group>
+                        <group states="name">
+                            <field name="name"/>
+                        </group>
+                    </sheet>
                     <footer>
-                        <button name="action_previous" string="Previous" type="object" class="oe_highlight"/>
-                        <button name="crear_batalla" string="Create Battle" type="object" class="oe_highlight"/>
+                        <button states="name" name="create_battle" type="object"
+                                string="Crear Batalla" class="oe_highlight"/>
+                        <button states="players,fecha" name="create_battle" type="object"
+                                string="Crear Batalla" class="oe_highlight disabled"/>
+                        <button special="cancel" string="Cancel"/>
                     </footer>
+
                 </form>
             </field>
         </record>
