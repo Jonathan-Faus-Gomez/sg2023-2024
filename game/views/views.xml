@@ -25,8 +25,8 @@
       <field name="context">{'default_is_player': True, 'search_default_is_player_filter': 1}</field>
       <field name="search_view_id" ref="game.players_search_view"/>
       <field name="view_ids" eval="[(5, 0, 0),
-            (0, 0, {'view_mode': 'tree', 'view_id': ref('game.player_tree_view')}),
-            (0, 0, {'view_mode': 'form', 'view_id': ref('game.player_form_view')}),]"/>
+            (0, 0, {'view_mode': 'tree', 'view_id': ref('game.player_tree')}),
+            (0, 0, {'view_mode': 'form', 'view_id': ref('game.player_form')}),]"/>
     </record>
 
 
