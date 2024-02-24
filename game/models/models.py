@@ -355,6 +355,44 @@ class batalla_wizard(models.TransientModel):
             "player2": self.player2.id  # Cambiado a ID
         })
 
+    def action_next(self):
+        if (self.state == 'players'):
+            if (len(self.player2) > 0):
+                self.state = 'fecha'
+            else:
+                return {
+                    'type': 'ir.actions.client',
+                    'tag': 'display_notification',
+                    'params': {
+                        'message': 'No has seleccionado el segundo jugador',
+                        'type': 'info',
+                        'sticky': False,
+                    }
+                }
+        elif (self.state == 'fecha'):
+                self.state = 'name'
+        return {
+            'type': 'ir.actions.act_window',
+            'name': 'Launch batalla wizard',
+            'res_model': self._name,
+            'view_mode': 'form',
+            'target': 'new',
+            'res_id': self.id,
+            'context': self._context
+        }
+
+
     def action_previous(self):
-        if (self.state == 'fecha'):
+        if(self.state == 'fecha'):
             self.state = 'players'
+        elif(self.state == 'name'):
+            self.state = 'fecha'
+        return{
+            'type': 'ir.actions.act_window',
+            'name': 'Launch batalla wizard',
+            'res_model': self._name,
+            'view_mode': 'form',
+            'target': 'new',
+            'res_id': self.id,
+            'context': self._context
+        }
