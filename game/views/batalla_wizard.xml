@@ -16,7 +16,7 @@
                 </form>
             </field>
         </record>
-        
+
         <!-- Vista para la selección de fecha -->
         <record id="view_batalla_wizard_form_fecha" model="ir.ui.view">
             <field name="name">game.batalla_wizard.form.fecha</field>
