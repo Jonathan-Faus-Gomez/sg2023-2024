@@ -5,7 +5,7 @@
             <field name="name">game.batalla_wizard.form.players</field>
             <field name="model">game.batalla_wizard</field>
             <field name="arch" type="xml">
-                <form string="Wizard Form" version="7.0">
+                <form string="Wizard Form (Players)" version="7.0">
                     <group>
                         <field name="player1"/>
                         <field name="player2"/>
@@ -15,7 +15,6 @@
                     </footer>
                 </form>
             </field>
-
         </record>
 
         <!-- Vista para la selección de fecha -->
@@ -23,7 +22,7 @@
             <field name="name">game.batalla_wizard.form.fecha</field>
             <field name="model">game.batalla_wizard</field>
             <field name="arch" type="xml">
-                <form string="Wizard Form" version="7.0">
+                <form string="Wizard Form (Fecha)" version="7.0">
                     <group>
                         <field name="inicio"/>
                     </group>
@@ -40,7 +39,7 @@
             <field name="name">game.batalla_wizard.form.name</field>
             <field name="model">game.batalla_wizard</field>
             <field name="arch" type="xml">
-                <form string="Wizard Form" version="7.0">
+                <form string="Wizard Form (Name)" version="7.0">
                     <group>
                         <field name="name"/>
                     </group>
