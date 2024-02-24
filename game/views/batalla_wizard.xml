@@ -1,8 +1,8 @@
 <odoo>
     <data>
-        <record model="ir.ui.view" id="roma.battle_wizard_view">
-            <field name="name">Roma battle wizard</field>
-            <field name="model">roma.battle_wizard</field>
+        <record model="ir.ui.view" id="game.battle_wizard_view">
+            <field name="name">Batalla wizard</field>
+            <field name="model">game.battle_wizard</field>
             <field name="arch" type="xml">
                 <form>
                     <header>
