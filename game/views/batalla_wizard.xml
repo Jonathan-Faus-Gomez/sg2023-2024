@@ -15,7 +15,7 @@
                     </footer>
                 </form>
             </field>
-            <field name="sequence" eval="1"/>
+
         </record>
 
         <!-- Vista para la selección de fecha -->
