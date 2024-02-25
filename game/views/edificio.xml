@@ -62,6 +62,7 @@
                     <sheet>
                         <group states="players">
                             <field name="player"/>
+                            <field name="tipo"/>
                         </group>
                         <group states="tipos">
                             <field name="tipo"/>
