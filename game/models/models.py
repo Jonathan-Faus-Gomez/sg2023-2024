@@ -339,7 +339,18 @@ class edificio_wizard(models.TransientModel):
 
     def action_next(self):
         if self.state == 'players':
-            self.state = 'tipos'
+            if not self.player:
+                return {
+                    'type': 'ir.actions.client',
+                    'tag': 'display_notification',
+                    'params': {
+                        'message': 'Por favor selecciona un jugador',
+                        'type': 'info',
+                        'sticky': False,
+                    }
+                }
+            else:
+                self.state = 'tipos'
         return self._reload_wizard()
 
     def action_previous(self):
