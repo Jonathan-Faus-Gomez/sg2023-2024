@@ -295,6 +295,8 @@ class edificio_wizard(models.TransientModel):  # FALTA RELACION CON PLAYER
         required=True
     )
 
+    player = fields.Many2one('res.partner', default=lambda self: self._context.get('player_context'))
+
     tipoProduccion = fields.Selection([('1', 'Oro'), ('2', 'Carne'), ('3', 'Vegetal')], )
 
     name = fields.Char(compute='_get_name')
@@ -311,12 +313,51 @@ class edificio_wizard(models.TransientModel):  # FALTA RELACION CON PLAYER
                 tipo_prod_name = dict(b._fields['tipoProduccion'].selection).get(b.tipoProduccion, 'desconocido')
                 b.name = f"{tipo_name} {tipo_prod_name}"
 
+
+    state = fields.Selection([
+        ('player', "Player Selection"),
+        ('tipo', "Tipo Selection"),
+    ], default='player')
+
     def crear_edificio(self):
-        self.env['game.edificio'].create({
+        if not self.name or not self.player:
+            return {
+                'type': 'ir.actions.client',
+                'tag': 'display_notification',
+                'params': {
+                    'message': 'Por favor completa todos los campos requeridos',
+                    'type': 'warning',
+                    'sticky': False,
+                }
+            }
+
+        self.env['game.batalla'].create({
             "name": self.name,
             "tipo": self.tipo,
-            "tipoProduccion": self.tipoProduccion
+            "tipoProduccion": self.tipoProduccion,
+            "player": self.player.id,
         })
+
+    def action_next(self):
+        if self.state == 'player':
+                self.state = 'tipo'
+        return self._reload_wizard()
+
+    def action_previous(self):
+        if self.state == 'tipo':
+            self.state = 'player'
+        return self._reload_wizard()
+
+    def _reload_wizard(self):
+        return {
+            'type': 'ir.actions.act_window',
+            'name': 'Launch edificio wizard',
+            'res_model': self._name,
+            'view_mode': 'form',
+            'target': 'new',
+            'res_id': self.id,
+            'context': self._context
+        }
 
 
 class batalla_wizard(models.TransientModel):

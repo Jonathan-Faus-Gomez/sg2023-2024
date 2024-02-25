@@ -38,19 +38,44 @@
             <field name="name">Edificio wizard</field>
             <field name="model">game.edificio_wizard</field>
             <field name="arch" type="xml">
-                <form > <sheet>
-                    <group>
-                        <field name="name"/>
-                        <field name="tipo" />
-                        <field name="tipoProduccion" attrs="{'invisible':[('tipo', '!=', '4')]}"/>ls
-                        <footer>
-                            <button name="crear_edificio" type="object"
-                                    string="Crear edificio" class="oe_highlight"/>
+                <form>
+                    <header>
+                        <field name="state" widget="statusbar"/>
+                        <button name="action_previous" type="object"
+                                string="Previous" states="tipo"
+                        />
+                        <button name="action_previous" type="object"
+                                string="Previous" states="player"
+                                 class="oe_highlight disabled"
+                        />
+                        <button name="action_next" type="object"
+                                string="Next"
+                                states="player,"
+                                class="oe_highlight"
+                        />
+                        <button name="action_next" type="object"
+                                string="Next"
+                                states="tipo"
+                                class="oe_highlight  disabled"/>
 
-                            <button special="cancel" string="Cancel"/>
-                        </footer>
-                    </group>
-                </sheet>
+                    </header>
+                    <sheet>
+                        <group states="player">
+                            <field name="player"/>
+                        </group>
+                        <group states="tipo">
+                            <field name="tipo"/>
+                            <field name="tipoProduccion" attrs="{'invisible':[('tipo', '!=', '4')]}"/>
+                        </group>
+                    </sheet>
+                    <footer>
+                        <button states="tipo" name="crear_edificio" type="object"
+                                string="Crear Edificio" class="oe_highlight"/>
+                        <button states="players" name="crear_edificio" type="object"
+                                string="Crear Edificio" class="oe_highlight disabled"/>
+                        <button special="cancel" string="Cancel"/>
+                    </footer>
+
                 </form>
             </field>
         </record>

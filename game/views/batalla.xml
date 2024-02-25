@@ -55,6 +55,57 @@
             <field name="target">new</field>
         </record>
 
+        <record model="ir.ui.view" id="game.batalla_wizard_view">
+            <field name="name">Batalla wizard</field>
+            <field name="model">game.batalla_wizard</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <field name="state" widget="statusbar"/>
+                        <button name="action_previous" type="object"
+                                string="Previous" states="fecha,name"
+                        />
+                        <button name="action_previous" type="object"
+                                string="Previous" states="players"
+                                 class="oe_highlight disabled"
+                        />
+                        <button name="action_next" type="object"
+                                string="Next"
+                                states="players,fecha"
+                                class="oe_highlight"
+                        />
+                        <button name="action_next" type="object"
+                                string="Next"
+                                states="name"
+                                class="oe_highlight  disabled"/>
+
+                    </header>
+                    <sheet>
+                        <group states="players">
+                            <field name="player1" />
+                            <field name="player2"/>
+                        </group>
+                        <group states="fecha">
+                            <field name="inicio"/>
+
+
+                        </group>
+                        <group states="name">
+                            <field name="name"/>
+                        </group>
+                    </sheet>
+                    <footer>
+                        <button states="name" name="crear_batalla" type="object"
+                                string="Crear Batalla" class="oe_highlight"/>
+                        <button states="players,fecha" name="crear_batalla" type="object"
+                                string="Crear Batalla" class="oe_highlight disabled"/>
+                        <button special="cancel" string="Cancel"/>
+                    </footer>
+
+                </form>
+            </field>
+        </record>
+
 
     </data>
 </odoo>
