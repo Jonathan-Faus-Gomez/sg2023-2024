@@ -64,7 +64,7 @@
                             <field name="player"/>
                         </group>
                         <group states="tipo">
-
+                            <field name="tipo"/>
                         </group>
                     </sheet>
                     <footer>
