@@ -300,7 +300,6 @@ class edificio_wizard(models.TransientModel):
     tipoProduccion = fields.Selection([('1', 'Oro'), ('2', 'Carne'), ('3', 'Vegetal')], )
 
 
-
     @api.depends('tipo', 'tipoProduccion')
     def _get_name(self):
         for b in self:
