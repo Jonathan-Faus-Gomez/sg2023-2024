@@ -313,14 +313,13 @@ class edificio_wizard(models.TransientModel):
                 tipo_prod_name = dict(b._fields['tipoProduccion'].selection).get(b.tipoProduccion, 'desconocido')
                 b.name = f"{tipo_name} {tipo_prod_name}"
 
-
     state = fields.Selection([
         ('players', "Player Selection"),
         ('tipos', "Tipo Selection"),
     ], default='players')
 
     def crear_edificio(self):
-        if not self.name or not self.player:
+        if not self.name or not self.player or not self.tipo:
             return {
                 'type': 'ir.actions.client',
                 'tag': 'display_notification',
@@ -340,7 +339,7 @@ class edificio_wizard(models.TransientModel):
 
     def action_next(self):
         if self.state == 'players':
-                self.state = 'tipos'
+            self.state = 'tipos'
         return self._reload_wizard()
 
     def action_previous(self):
@@ -358,7 +357,6 @@ class edificio_wizard(models.TransientModel):
             'res_id': self.id,
             'context': self._context
         }
-
 
 class batalla_wizard(models.TransientModel):
     _name = 'game.batalla_wizard'
