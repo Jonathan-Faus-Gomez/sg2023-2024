@@ -42,33 +42,33 @@
                     <header>
                         <field name="state" widget="statusbar"/>
                         <button name="action_previous" type="object"
-                                string="Previous" states="tipo"
+                                string="Previous" states="tipos"
                         />
                         <button name="action_previous" type="object"
-                                string="Previous" states="player"
+                                string="Previous" states="players"
                                  class="oe_highlight disabled"
                         />
                         <button name="action_next" type="object"
                                 string="Next"
-                                states="player,"
+                                states="players"
                                 class="oe_highlight"
                         />
                         <button name="action_next" type="object"
                                 string="Next"
-                                states="tipo"
+                                states="tipos"
                                 class="oe_highlight  disabled"/>
 
                     </header>
                     <sheet>
-                        <group states="player">
+                        <group states="players">
                             <field name="player"/>
                         </group>
-                        <group states="tipo">
+                        <group states="tipos">
                             <field name="tipo"/>
                         </group>
                     </sheet>
                     <footer>
-                        <button states="tipo" name="crear_edificio" type="object"
+                        <button states="tipos" name="crear_edificio" type="object"
                                 string="Crear Edificio" class="oe_highlight"/>
                         <button states="players" name="crear_edificio" type="object"
                                 string="Crear Edificio" class="oe_highlight disabled"/>
