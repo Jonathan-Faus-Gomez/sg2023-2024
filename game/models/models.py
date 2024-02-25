@@ -287,7 +287,7 @@ class batalla(models.Model):
             record.progreso = (tiempo_pasado * 100) / record.tiempo_total
 
 
-class edificio_wizard(models.TransientModel):  # FALTA RELACION CON PLAYER
+class edificio_wizard(models.TransientModel):
     _name = 'game.edificio_wizard'
 
     tipo = fields.Selection(
@@ -315,8 +315,8 @@ class edificio_wizard(models.TransientModel):  # FALTA RELACION CON PLAYER
 
 
     state = fields.Selection([
-        ('player', "Player Selection"),
-        ('tipo', "Tipo Selection"),
+        ('players', "Player Selection"),
+        ('tipos', "Tipo Selection"),
     ], default='player')
 
     def crear_edificio(self):
@@ -331,7 +331,7 @@ class edificio_wizard(models.TransientModel):  # FALTA RELACION CON PLAYER
                 }
             }
 
-        self.env['game.batalla'].create({
+        self.env['game.edificio'].create({
             "name": self.name,
             "tipo": self.tipo,
             "tipoProduccion": self.tipoProduccion,
@@ -339,13 +339,13 @@ class edificio_wizard(models.TransientModel):  # FALTA RELACION CON PLAYER
         })
 
     def action_next(self):
-        if self.state == 'player':
-                self.state = 'tipo'
+        if self.state == 'players':
+                self.state = 'tipos'
         return self._reload_wizard()
 
     def action_previous(self):
-        if self.state == 'tipo':
-            self.state = 'player'
+        if self.state == 'tipos':
+            self.state = 'players'
         return self._reload_wizard()
 
     def _reload_wizard(self):
