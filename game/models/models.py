@@ -317,7 +317,7 @@ class edificio_wizard(models.TransientModel):
     state = fields.Selection([
         ('players', "Player Selection"),
         ('tipos', "Tipo Selection"),
-    ], default='player')
+    ], default='players')
 
     def crear_edificio(self):
         if not self.name or not self.player:
