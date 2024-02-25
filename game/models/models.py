@@ -221,7 +221,7 @@ class edificio(models.Model):
     def _compute_ataque(self):
         for edificio in self:
             edificio.ataque = 0
-        for edificio in self.filtered(lambda e: e.tipo == '2'):
+        for edificio in self.filtered(lambda e: e.tipo == '3'):
             edificio.ataque = 100 * edificio.level * 0.8
 
 
