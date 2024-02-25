@@ -11,7 +11,7 @@
                     <field name="level"/>
                     <field name="player"/>
                     <field name="vida"/>
-                    <field name="ataque" attrs="{'invisible':[('tipo', '!=', '2')]}"/>
+                    <field name="ataque" attrs="{'invisible':[('tipo', '!=', '3')]}"/>
                 </tree>
             </field>
         </record>
