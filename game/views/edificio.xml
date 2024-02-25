@@ -65,7 +65,8 @@
                             <field name="tipo"/>
                         </group>
                         <group states="tipos">
-                            <field name="tipo"/>
+                            <field name="name"/>
+                            <field name="tipoProduccion" attrs="{'invisible':[('tipo', '!=', '4')]}"/>
                         </group>
                     </sheet>
                     <footer>
