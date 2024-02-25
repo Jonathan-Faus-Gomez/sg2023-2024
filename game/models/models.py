@@ -285,9 +285,13 @@ class batalla(models.Model):
                                                                 restante.seconds % 60)
             #  2 DIGITOS:02:02         HORAS->SEGUNDOS//3600 MINUTOS->SEGUNDOS//60 % 60  SEGUNDOS->SEGUNDOS%60
             record.progreso = (tiempo_pasado * 100) / record.tiempo_total
+<<<<<<< HEAD
 
 
 class edificio_wizard(models.TransientModel):
+=======
+class edificio_wizard(models.TransientModel): # FALTA RELACION CON PLAYER
+>>>>>>> 8badb23b7b84a6b6303222511270b4118aebf7ba
     _name = 'game.edificio_wizard'
 
     tipo = fields.Selection(
@@ -295,11 +299,17 @@ class edificio_wizard(models.TransientModel):
         required=True
     )
 
+<<<<<<< HEAD
     player = fields.Many2one('res.partner', default=lambda self: self._context.get('player_context'))
 
     tipoProduccion = fields.Selection([('1', 'Oro'), ('2', 'Carne'), ('3', 'Vegetal')], )
 
 
+=======
+    tipoProduccion = fields.Selection([('1', 'Oro'), ('2', 'Carne'), ('3', 'Vegetal')],)
+
+    name = fields.Char(compute='_get_name')
+>>>>>>> 8badb23b7b84a6b6303222511270b4118aebf7ba
 
     @api.depends('tipo', 'tipoProduccion')
     def _get_name(self):
@@ -313,6 +323,7 @@ class edificio_wizard(models.TransientModel):
                 tipo_prod_name = dict(b._fields['tipoProduccion'].selection).get(b.tipoProduccion, 'desconocido')
                 b.name = f"{tipo_name} {tipo_prod_name}"
 
+<<<<<<< HEAD
     name = fields.Char(default=_get_name)
 
     state = fields.Selection([
@@ -453,3 +464,11 @@ class batalla_wizard(models.TransientModel):
             'res_id': self.id,
             'context': self._context
         }
+=======
+    def crear_edificio(self):
+        self.env['game.edificio'].create({
+            "name": self.name,
+            "tipo": self.tipo,
+            "tipoProduccion": self.tipoProduccion
+        })
+>>>>>>> 8badb23b7b84a6b6303222511270b4118aebf7ba
