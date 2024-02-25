@@ -64,8 +64,7 @@
                             <field name="player"/>
                         </group>
                         <group states="tipo">
-                            <field name="tipo"/>
-                            <field name="tipoProduccion" attrs="{'invisible':[('tipo', '!=', '4')]}"/>
+
                         </group>
                     </sheet>
                     <footer>
