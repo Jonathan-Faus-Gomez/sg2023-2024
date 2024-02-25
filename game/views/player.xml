@@ -33,6 +33,8 @@
                       <field name="vegetal"/>
                       <button name="%(game.launch_batalla_wizard)d" type="action"
                               string="Crear batalla" class="oe_highlight" context="{'default_state': 'players'}"/>
+                      <button name="%(game.launch_edificio_wizard)d" type="action"
+                              string="Crear edificio" class="oe_highlight" context="{'default_state': 'players'}"/>
                   </group>
               </sheet>
           </form>
