@@ -299,7 +299,7 @@ class edificio_wizard(models.TransientModel):
 
     tipoProduccion = fields.Selection([('1', 'Oro'), ('2', 'Carne'), ('3', 'Vegetal')], )
 
-    name = fields.Char(default=_get_name)
+
 
     @api.depends('tipo', 'tipoProduccion')
     def _get_name(self):
@@ -312,6 +312,8 @@ class edificio_wizard(models.TransientModel):
             if b.tipo and b.tipoProduccion:
                 tipo_prod_name = dict(b._fields['tipoProduccion'].selection).get(b.tipoProduccion, 'desconocido')
                 b.name = f"{tipo_name} {tipo_prod_name}"
+
+    name = fields.Char(default=_get_name)
 
     state = fields.Selection([
         ('players', "Player Selection"),
