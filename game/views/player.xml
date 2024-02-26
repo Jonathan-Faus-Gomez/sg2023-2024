@@ -23,6 +23,9 @@
       <field name="model">res.partner</field>
       <field name="arch" type="xml">
           <form string="Jugador">
+              <header>
+                <button name="%(action_server_update_player)d" string="Jugador a nivel 10" type="object" class="oe_highlight"/>
+              </header>
               <sheet>
                   <group>
                       <field name="name"/>
@@ -39,6 +42,13 @@
               </sheet>
           </form>
       </field>
+    </record>
+  <!-- Action server -->
+    <record id="action_server_update_player" model="ir.actions.server">
+            <field name="name">Jugador a nivel 10</field>
+            <field name="model_id" ref="model_res_partner"/>
+            <field name="state">code</field>
+            <field name="code">self.env['res.partner'].browse(self._context.get('active_id')).write({'level': '10'})</field>
     </record>
 
   </data>
