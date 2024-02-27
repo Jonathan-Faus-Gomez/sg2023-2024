@@ -41,7 +41,7 @@
       </field>
     </record>
 
-      <record model="ir.ui.view" id="game.player_partners_form_view_inherit">
+    <record model="ir.ui.view" id="game.player_partners_form_view_inherit">
       <field name="name">Players form inherit</field>
       <field name="model">res.partner</field>
       <field name="inherit_id" ref="base.view_partner_form"/>
