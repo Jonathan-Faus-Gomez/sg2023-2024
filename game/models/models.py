@@ -33,6 +33,14 @@ class player(models.Model):
     vegetal = fields.Integer(default=3000)
     oro = fields.Integer(default=10000)
 
+    is_player = fields.Boolean(default=False)
+
+    @api.model
+    def create(self, vals):
+        if vals.get('is_player', False):
+            vals['is_player'] = True
+        return super(ResPartner, self).create(vals)
+
     @api.depends('dinos', 'edificios')
     def _compute_poder(self):
         for player in self:

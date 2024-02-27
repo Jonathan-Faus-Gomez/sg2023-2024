@@ -23,9 +23,6 @@
       <field name="model">res.partner</field>
       <field name="arch" type="xml">
           <form string="Jugador">
-              <header>
-                <button name="%(action_server_update_player)d" string="Actualizar Campo" type="object" class="oe_highlight"/>
-              </header>
               <sheet>
                   <group>
                       <field name="name"/>
@@ -44,12 +41,26 @@
       </field>
     </record>
 
-    <!-- Action server -->
-    <record id="action_server_update_player" model="ir.actions.server">
-            <field name="name">Jugador a nivel 10</field>
-            <field name="model_id" ref="model_res_partner"/>
-            <field name="state">code</field>
-            <field name="code">self.env['res.partner'].browse(self._context.get('active_id')).write({'level': '10'})</field>
+      <record model="ir.ui.view" id="game.player_partners_form_view_inherit">
+      <field name="name">Players form inherit</field>
+      <field name="model">res.partner</field>
+      <field name="inherit_id" ref="base.view_partner_form"/>
+      <field name="arch" type="xml">
+
+        <xpath expr="//field[@name='vat']" position="after">
+          <field name="is_player"/>
+        </xpath>
+
+        <notebook position="inside">
+          <page string="Player">
+            <group>
+              <field name="name"/>
+              <field name="edificios"/>
+              <field name="dinos"/>
+            </group>
+          </page>
+        </notebook>
+      </field>
     </record>
 
   </data>
